@@ -1,4 +1,5 @@
 #include <iostream>
+#include "exeTools/ExeRunner.h"
 
 const char* getFilenameFromPath(const char* path) {
   size_t filenameIndex = 0;
@@ -20,6 +21,10 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  //TODO: Run the EXE
+  if (!ExeRunner::runExe(argc - 1, &argv[1])) {
+    std::cerr << "Failed to run the EXE" << std::endl;
+    return 1;
+  }
+
   return 0;
 }
