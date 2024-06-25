@@ -2,6 +2,8 @@
 
 #include <windef.h>
 
+typedef void (*TIMERPROC)(HWND, UINT, UINT_PTR, DWORD);
+
 struct PAINTSTRUCT {
   HDC hdc;
   BOOL fErase;
