@@ -86,6 +86,15 @@ struct RECT {
   LONG bottom;
 };
 
+struct POINT {
+  LONG x;
+  LONG y;
+};
+
 typedef RECT* PRECT;
 typedef RECT* NPRECT;
 typedef RECT* LPRECT;
+
+typedef POINT* PPOINT;
+typedef POINT* NPPOINT;
+typedef POINT* LPPOINT;
