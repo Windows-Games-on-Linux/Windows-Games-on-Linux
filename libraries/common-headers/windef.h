@@ -78,3 +78,14 @@ typedef ULONGLONG* PULONGLONG;
 typedef HICON     HCURSOR;
 typedef HINSTANCE HMODULE;
 typedef HKEY*     PHKEY;
+
+struct RECT {
+  LONG left;
+  LONG top;
+  LONG right;
+  LONG bottom;
+};
+
+typedef RECT* PRECT;
+typedef RECT* NPRECT;
+typedef RECT* LPRECT;
