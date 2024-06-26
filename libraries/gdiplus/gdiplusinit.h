@@ -10,3 +10,4 @@ enum DebugEventLevel {
 
 typedef void (*DebugEventProc)(DebugEventLevel level, CHAR* message);
 typedef Status (*NotificationHookProc)(ULONG_PTR* token);
+typedef VOID (*NotificationUnhookProc)(ULONG_PTR token);
