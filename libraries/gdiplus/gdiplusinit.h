@@ -1,5 +1,6 @@
 #pragma once
 
+#include "gdiplustypes.h"
 #include <windef.h>
 
 enum DebugEventLevel {
@@ -8,3 +9,4 @@ enum DebugEventLevel {
 };
 
 typedef void (*DebugEventProc)(DebugEventLevel level, CHAR* message);
+typedef Status (*NotificationHookProc)(ULONG_PTR* token);
