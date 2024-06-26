@@ -6,3 +6,6 @@ typedef Status GpStatus;
 
 class GpImage {
 };
+
+class GpBitmap : public GpImage {
+};
