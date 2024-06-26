@@ -3,6 +3,7 @@
 #include <windef.h>
 
 typedef void (*TIMERPROC)(HWND, UINT, UINT_PTR, DWORD);
+typedef LRESULT (*WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 
 struct PAINTSTRUCT {
   HDC hdc;
