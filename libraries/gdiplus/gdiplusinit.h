@@ -20,3 +20,8 @@ struct GdiplusStartupInput {
 
   GdiplusStartupInput(DebugEventProc debugEventCallback, BOOL suppressBackgroundThread, BOOL suppressExternalCodecs);
 };
+
+struct GdiplusStartupOutput {
+  NotificationHookProc NotificationHook;
+  NotificationUnhookProc NotificationUnhook;
+};
