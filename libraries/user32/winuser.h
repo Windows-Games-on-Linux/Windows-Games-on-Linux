@@ -24,6 +24,19 @@ struct MSG {
   DWORD lPrivate;
 };
 
+struct WNDCLASSW {
+  UINT style;
+  WNDPROC lpfnWndProc;
+  int cbClsExtra;
+  int cbWndExtra;
+  HINSTANCE hInstance;
+  HICON hIcon;
+  HCURSOR hCursor;
+  HBRUSH hbrBackground;
+  LPCWSTR lpszMenuName;
+  LPCWSTR lpszClassName;
+};
+
 typedef PAINTSTRUCT* PPAINTSTRUCT;
 typedef PAINTSTRUCT* NPPAINTSTRUCT;
 typedef PAINTSTRUCT* LPPAINTSTRUCT;
@@ -31,3 +44,7 @@ typedef PAINTSTRUCT* LPPAINTSTRUCT;
 typedef MSG* PMSG;
 typedef MSG* NPMSG;
 typedef MSG* LPMSG;
+
+typedef WNDCLASSW* PWNDCLASSW;
+typedef WNDCLASSW* NPWNDCLASSW;
+typedef WNDCLASSW* LPWNDCLASSW;
