@@ -2,4 +2,5 @@
 
 #include <windef.h>
 
-typedef LONG LSTATUS;
+typedef LONG        LSTATUS;
+typedef ACCESS_MASK REGSAM;
