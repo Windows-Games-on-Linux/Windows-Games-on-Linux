@@ -2,6 +2,7 @@
 
 #include "intsafe.h"
 #include "basetsd.h"
+#include "minwinbase.h"
 
 #define WINAPI
 #define CALLBACK
