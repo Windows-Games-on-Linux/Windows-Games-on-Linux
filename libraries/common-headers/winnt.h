@@ -34,14 +34,16 @@ typedef CHAR*        PSTR;
 typedef WCHAR*       PWCHAR;
 typedef WCHAR*       PWSTR;
 typedef uint64_t     ULONGLONG;
+typedef DWORD        ACCESS_MASK;
 
-typedef PVOID     HANDLE;
-typedef LONG      HRESULT;
-typedef BOOLEAN*  PBOOLEAN;
-typedef LONG*     PLONG;
-typedef LONGLONG* PLONGLONG;
-typedef SHORT*    PSHORT;
-typedef LONGLONG  USN;
+typedef PVOID        HANDLE;
+typedef LONG         HRESULT;
+typedef BOOLEAN*     PBOOLEAN;
+typedef LONG*        PLONG;
+typedef LONGLONG*    PLONGLONG;
+typedef SHORT*       PSHORT;
+typedef LONGLONG     USN;
+typedef ACCESS_MASK* PACCESS_MASK;
 
 typedef HANDLE* PHANDLE;
 
