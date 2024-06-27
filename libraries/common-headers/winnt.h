@@ -49,4 +49,12 @@ struct SID_IDENTIFIER_AUTHORITY {
   BYTE Value[6];
 };
 
+struct SID {
+  BYTE Revision;
+  BYTE SubAuthorityCount;
+  SID_IDENTIFIER_AUTHORITY IdentifierAuthority;
+  DWORD SubAuthority[];
+};
+
 typedef SID_IDENTIFIER_AUTHORITY* PSID_IDENTIFIER_AUTHORITY;
+typedef SID* PSID;
