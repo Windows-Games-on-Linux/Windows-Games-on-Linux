@@ -9,3 +9,11 @@ struct SOCKADDR {
 
 typedef SOCKADDR* PSOCKADDR;
 typedef SOCKADDR* LPSOCKADDR;
+
+struct SOCKET_ADDRESS {
+  LPSOCKADDR lpSockaddr;
+  INT iSockaddrLength;
+};
+
+typedef SOCKET_ADDRESS* PSOCKET_ADDRESS;
+typedef SOCKET_ADDRESS* LPSOCKET_ADDRESS;
