@@ -37,6 +37,7 @@ typedef uint64_t     ULONGLONG;
 typedef DWORD        ACCESS_MASK;
 typedef WCHAR*       LPWCH;
 typedef CONST WCHAR* LPCWCH;
+typedef CONST CHAR*  LPCCH;
 
 typedef PVOID        HANDLE;
 typedef LONG         HRESULT;
