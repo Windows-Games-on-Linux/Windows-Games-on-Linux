@@ -2,6 +2,9 @@
 
 #include <windef.h>
 
+#define MAX_DEFAULTCHAR  2
+#define MAX_LEADBYTES   12
+
 typedef DWORD LCTYPE;
 typedef DWORD LGRPID;
 
@@ -11,4 +14,12 @@ struct NLSVERSIONINFO {
   DWORD dwDefinedVersion;
 };
 
+struct CPINFO {
+  UINT MaxCharSize;
+  BYTE DefaultChar[MAX_DEFAULTCHAR];
+  BYTE LeadByte[MAX_LEADBYTES];
+};
+
 typedef NLSVERSIONINFO* LPNLSVERSIONINFO;
+
+typedef CPINFO* LPCPINFO;
