@@ -115,3 +115,17 @@ enum TOKEN_INFORMATION_CLASS {
 };
 
 typedef TOKEN_INFORMATION_CLASS* PTOKEN_INFORMATION_CLASS;
+
+union ULARGE_INTEGER {
+  struct {
+    DWORD LowPart;
+    DWORD HighPart;
+  } DUMMYSTRUCTNAME;
+  struct {
+    DWORD LowPart;
+    DWORD HighPart;
+  } u;
+  ULONGLONG QuadPart;
+};
+
+typedef ULARGE_INTEGER* PULARGE_INTEGER;
