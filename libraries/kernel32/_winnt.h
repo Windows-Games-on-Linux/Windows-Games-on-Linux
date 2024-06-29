@@ -120,3 +120,10 @@ struct CONTEXT {
 };
 
 typedef CONTEXT* PCONTEXT;
+
+struct EXCEPTION_POINTERS {
+  PEXCEPTION_RECORD ExceptionRecord;
+  PCONTEXT ContextRecord;
+};
+
+typedef EXCEPTION_POINTERS* PEXCEPTION_POINTERS;
