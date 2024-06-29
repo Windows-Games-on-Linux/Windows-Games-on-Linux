@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windef.h>
+#include <ke.h>
 
 #define EXCEPTION_MAXIMUM_PARAMETERS 15
 
