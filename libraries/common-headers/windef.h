@@ -10,6 +10,8 @@
 
 #define APIENTRY WINAPI
 
+#define MAX_PATH 260
+
 typedef unsigned short WORD;
 typedef int            BOOL;
 typedef unsigned char  BYTE;
