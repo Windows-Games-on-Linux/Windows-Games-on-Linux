@@ -37,4 +37,5 @@ typedef PROCESS_INFORMATION* LPPROCESS_INFORMATION;
 
 extern "C" {
   DWORD GetCurrentThreadId();
+  DWORD GetCurrentProcessId();
 };
