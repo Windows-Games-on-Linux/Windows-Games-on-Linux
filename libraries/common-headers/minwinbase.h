@@ -46,6 +46,19 @@ struct WIN32_FIND_DATAW {
   WORD wFinderFlags;
 };
 
+struct OVERLAPPED {
+  ULONG_PTR Internal;
+  ULONG_PTR InternalHigh;
+  union {
+    struct {
+      DWORD Offset;
+      DWORD OffsetHigh;
+    };
+    PVOID Pointer;
+  } DUMMYUNIONNAME;
+  HANDLE hEvent;
+};
+
 typedef FILETIME* PFILETIME;
 typedef FILETIME* LPFILETIME;
 
@@ -54,3 +67,5 @@ typedef SYSTEMTIME* LPSYSTEMTIME;
 
 typedef WIN32_FIND_DATAW* PWIN32_FIND_DATAW;
 typedef WIN32_FIND_DATAW* LPWIN32_FIND_DATAW;
+
+typedef OVERLAPPED* LPOVERLAPPED;
