@@ -103,3 +103,4 @@ typedef POINT* NPPOINT;
 typedef POINT* LPPOINT;
 
 #include "minwinbase.h"
+#include "winbase.h"
