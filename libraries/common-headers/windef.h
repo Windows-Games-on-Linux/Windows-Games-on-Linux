@@ -35,6 +35,7 @@ typedef unsigned int   UINT;
 typedef unsigned long  ULONG;
 typedef unsigned short USHORT;
 typedef UINT_PTR       WPARAM;
+typedef INT_PTR (*FARPROC)();
 
 typedef WORD    ATOM;
 typedef BOOL*   LPBOOL;
