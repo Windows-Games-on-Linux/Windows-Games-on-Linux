@@ -2,6 +2,9 @@
 
 #include <windef.h>
 
+typedef DWORD LCTYPE;
+typedef DWORD LGRPID;
+
 struct NLSVERSIONINFO {
   DWORD dwNLSVersionInfoSize;
   DWORD dwNLSVersion;
