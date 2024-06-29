@@ -36,3 +36,7 @@ struct SYSTEM_INFO {
 typedef MEMORYSTATUSEX* LPMEMORYSTATUSEX;
 
 typedef SYSTEM_INFO* LPSYSTEM_INFO;
+
+extern "C" {
+  void GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime);
+};
