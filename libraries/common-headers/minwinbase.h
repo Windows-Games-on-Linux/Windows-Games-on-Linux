@@ -80,3 +80,10 @@ enum FINDEX_INFO_LEVELS {
   FindExInfoBasic,
   FindExInfoMaxInfoLevel
 };
+
+enum FINDEX_SEARCH_OPS {
+  FindExSearchNameMatch,
+  FindExSearchLimitToDirectories,
+  FindExSearchLimitToDevices,
+  FindExSearchMaxSearchOp
+};
