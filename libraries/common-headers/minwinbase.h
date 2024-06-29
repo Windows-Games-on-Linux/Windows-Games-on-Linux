@@ -69,3 +69,8 @@ typedef WIN32_FIND_DATAW* PWIN32_FIND_DATAW;
 typedef WIN32_FIND_DATAW* LPWIN32_FIND_DATAW;
 
 typedef OVERLAPPED* LPOVERLAPPED;
+
+enum GET_FILEEX_INFO_LEVELS {
+  GetFileExInfoStandard,
+  GetFileExMaxInfoLevel
+};
