@@ -1,5 +1,6 @@
 #pragma once
 
+#include <windef.h>
 #include <ntddk.h>
 
 typedef RTL_RUN_ONCE           INIT_ONCE;
@@ -16,3 +17,5 @@ typedef SRWLOCK PSRWLOCK;
 
 typedef CRITICAL_SECTION* PCRITICAL_SECTION;
 typedef CRITICAL_SECTION* LPCRITICAL_SECTION;
+
+typedef void (*PTIMERAPCROUTINE)(LPVOID, DWORD, DWORD);
