@@ -7,6 +7,7 @@
 
 typedef DWORD LCTYPE;
 typedef DWORD LGRPID;
+typedef BOOL (*LOCALE_ENUMPROCW)(LPWSTR);
 
 struct NLSVERSIONINFO {
   DWORD dwNLSVersionInfoSize;
