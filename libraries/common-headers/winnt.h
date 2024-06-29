@@ -58,8 +58,14 @@ struct SID {
   DWORD SubAuthority[];
 };
 
+struct SLIST_ENTRY {
+  SLIST_ENTRY* Next;
+};
+
 typedef SID_IDENTIFIER_AUTHORITY* PSID_IDENTIFIER_AUTHORITY;
 typedef SID* PSID;
+
+typedef SLIST_ENTRY* PSLIST_ENTRY;
 
 enum TOKEN_INFORMATION_CLASS {
   TokenUser = 1,
