@@ -128,4 +128,17 @@ union ULARGE_INTEGER {
   ULONGLONG QuadPart;
 };
 
+union LARGE_INTEGER {
+  struct {
+    DWORD LowPart;
+    LONG HighPart;
+  } DUMMYSTRUCTNAME;
+  struct {
+    DWORD LowPart;
+    LONG HighPart;
+  } u;
+  LONGLONG QuadPart;
+};
+
 typedef ULARGE_INTEGER* PULARGE_INTEGER;
+typedef LARGE_INTEGER* PLARGE_INTEGER;
