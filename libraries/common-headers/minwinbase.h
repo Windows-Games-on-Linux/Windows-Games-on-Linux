@@ -15,7 +15,7 @@
 #define IO_REPARSE_TAG_WIM         0x80000008
 
 struct FILETIME {
-  DWORD dwLodDateTime;
+  DWORD dwLowDateTime;
   DWORD dwHighDateTime;
 };
 
