@@ -62,10 +62,23 @@ struct SLIST_ENTRY {
   SLIST_ENTRY* Next;
 };
 
+struct MEMORY_BASIC_INFORMATION {
+  PVOID BaseAddress;
+  PVOID AllocationBase;
+  DWORD AllocationProtect;
+  WORD PartitionId;
+  SIZE_T RegionSize;
+  DWORD State;
+  DWORD Protect;
+  DWORD Type;
+};
+
 typedef SID_IDENTIFIER_AUTHORITY* PSID_IDENTIFIER_AUTHORITY;
 typedef SID* PSID;
 
 typedef SLIST_ENTRY* PSLIST_ENTRY;
+
+typedef MEMORY_BASIC_INFORMATION* PMEMORY_BASIC_INFORMATION;
 
 enum TOKEN_INFORMATION_CLASS {
   TokenUser = 1,
