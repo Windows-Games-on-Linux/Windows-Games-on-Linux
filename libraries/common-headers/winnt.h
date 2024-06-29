@@ -74,12 +74,29 @@ struct MEMORY_BASIC_INFORMATION {
   DWORD Type;
 };
 
+struct OSVERSIONINFOEXW {
+  DWORD dwOSVersionInfoSize;
+  DWORD dwMajorVersion;
+  DWORD dwMinorVersion;
+  DWORD dwBuildNumber;
+  DWORD dwPlatformId;
+  WCHAR szCSDVersion[128];
+  WORD wServicePackMajor;
+  WORD wServicePackMinor;
+  WORD wSuiteMask;
+  BYTE wProductType;
+  BYTE wReserved;
+};
+
 typedef SID_IDENTIFIER_AUTHORITY* PSID_IDENTIFIER_AUTHORITY;
 typedef SID* PSID;
 
 typedef SLIST_ENTRY* PSLIST_ENTRY;
 
 typedef MEMORY_BASIC_INFORMATION* PMEMORY_BASIC_INFORMATION;
+
+typedef OSVERSIONINFOEXW* POSVERSIONINFOEXW;
+typedef OSVERSIONINFOEXW* LPOSVERSIONINFOEXW;
 
 enum TOKEN_INFORMATION_CLASS {
   TokenUser = 1,
