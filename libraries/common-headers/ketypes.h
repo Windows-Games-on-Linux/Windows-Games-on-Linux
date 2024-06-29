@@ -30,4 +30,10 @@ struct XSAVE_FORMAT {
   ULONG Cr0NpxState;
 };
 
+struct XSAVE_AREA_HEADER {
+  ULONG64 Mask;
+  ULONG64 Reserved[7];
+};
+
 typedef XSAVE_FORMAT* PXSAVE_FORMAT;
+typedef XSAVE_AREA_HEADER* PXSAVE_AREA_HEADER;
