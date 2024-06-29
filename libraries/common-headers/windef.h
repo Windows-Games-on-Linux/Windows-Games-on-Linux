@@ -2,7 +2,6 @@
 
 #include "intsafe.h"
 #include "basetsd.h"
-#include "minwinbase.h"
 #include "guiddef.h"
 
 #define WINAPI
@@ -100,3 +99,5 @@ typedef RECT* LPRECT;
 typedef POINT* PPOINT;
 typedef POINT* NPPOINT;
 typedef POINT* LPPOINT;
+
+#include "minwinbase.h"
