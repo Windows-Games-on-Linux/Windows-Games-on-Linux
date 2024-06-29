@@ -74,3 +74,9 @@ enum GET_FILEEX_INFO_LEVELS {
   GetFileExInfoStandard,
   GetFileExMaxInfoLevel
 };
+
+enum FINDEX_INFO_LEVELS {
+  FindExInfoStandard,
+  FindExInfoBasic,
+  FindExInfoMaxInfoLevel
+};
