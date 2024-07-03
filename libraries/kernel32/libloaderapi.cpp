@@ -134,3 +134,7 @@ HMODULE LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) {
   return dlopen(libraryPath.c_str(), RTLD_LAZY);
 }
 
+FARPROC GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
+  return (FARPROC)dlsym(hModule, lpProcName);
+}
+
