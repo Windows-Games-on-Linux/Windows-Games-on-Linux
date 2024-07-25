@@ -12,3 +12,8 @@ void __attribute__((stdcall)) EnterCriticalSection(LPCRITICAL_SECTION lpCritical
   lpCriticalSection->LockCount++;
 }
 
+void __attribute__((stdcall)) LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
+  lpCriticalSection->LockCount--;
+  pthread_mutex_unlock((pthread_mutex_t*)lpCriticalSection->LockSemaphore);
+}
+
