@@ -22,5 +22,6 @@ typedef void (*PTIMERAPCROUTINE)(LPVOID, DWORD, DWORD);
 
 extern "C" {
   void __attribute__((stdcall)) EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
+  void __attribute__((stdcall)) LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
 };
 
