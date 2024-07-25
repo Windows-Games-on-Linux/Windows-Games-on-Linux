@@ -13,3 +13,8 @@ PVOID __attribute__((stdcall)) FlsGetValue(DWORD dwFlsIndex) {
   return pthread_getspecific(dwFlsIndex);
 }
 
+BOOL __attribute__((stdcall)) FlsSetValue(DWORD dwFlsIndex, PVOID lpFlsData) {
+  pthread_setspecific(dwFlsIndex, lpFlsData);
+  return 1;
+}
+
