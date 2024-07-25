@@ -2,7 +2,7 @@
 
 #include <time.h>
 
-BOOL QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount) {
+BOOL __attribute__((stdcall)) QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount) {
   struct timespec time;
   clock_gettime(CLOCK_REALTIME, &time);
 
