@@ -8,5 +8,6 @@ typedef PTOP_LEVEL_EXCEPTION_FILTER LPTOP_LEVEL_EXCEPTION_FILTER;
 
 extern "C" {
   DWORD __attribute__((stdcall)) GetLastError();
+  void __attribute__((stdcall)) SetLastError(DWORD dwErrorCode);
 };
 
