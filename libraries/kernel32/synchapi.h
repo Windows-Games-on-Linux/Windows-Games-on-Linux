@@ -19,3 +19,8 @@ typedef CRITICAL_SECTION* PCRITICAL_SECTION;
 typedef CRITICAL_SECTION* LPCRITICAL_SECTION;
 
 typedef void (*PTIMERAPCROUTINE)(LPVOID, DWORD, DWORD);
+
+extern "C" {
+  void __attribute__((stdcall)) EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
+};
+
