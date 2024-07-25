@@ -73,7 +73,7 @@ namespace {
   }
 };
 
-HMODULE LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) {
+HMODULE __attribute__((stdcall)) LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) {
   //TODO: Implement the LOAD_LIBRARY_SEARCH_SYSTEM32 flag
   //We need a directory that will emulate the system32 directory
   //For now let's just load the libraries from the working path
@@ -134,7 +134,7 @@ HMODULE LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) {
   return dlopen(libraryPath.c_str(), RTLD_LAZY);
 }
 
-FARPROC GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
+FARPROC __attribute__((stdcall)) GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
   return (FARPROC)dlsym(hModule, lpProcName);
 }
 

@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include <cstdint>
 
-void GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime) {
+void __attribute__((stdcall)) GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime) {
   struct timeval time;
   gettimeofday(&time, nullptr);
 

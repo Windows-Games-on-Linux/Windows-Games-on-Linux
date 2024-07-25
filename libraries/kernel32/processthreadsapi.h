@@ -74,7 +74,7 @@ typedef PROCESS_INFORMATION* PPROCESS_INFORMATION;
 typedef PROCESS_INFORMATION* LPPROCESS_INFORMATION;
 
 extern "C" {
-  DWORD GetCurrentThreadId();
-  DWORD GetCurrentProcessId();
-  BOOL IsProcessorFeaturePresent(DWORD ProcessorFeature);
+  DWORD __attribute__((stdcall)) GetCurrentThreadId();
+  DWORD __attribute__((stdcall)) GetCurrentProcessId();
+  BOOL __attribute__((stdcall)) IsProcessorFeaturePresent(DWORD ProcessorFeature);
 };

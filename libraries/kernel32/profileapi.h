@@ -3,5 +3,5 @@
 #include <windef.h>
 
 extern "C" {
-  BOOL QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount);
+  BOOL __attribute__((stdcall)) QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount);
 };

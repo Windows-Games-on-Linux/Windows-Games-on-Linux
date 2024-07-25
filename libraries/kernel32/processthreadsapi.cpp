@@ -4,15 +4,15 @@
 #include <unistd.h>
 #include <iostream>
 
-DWORD GetCurrentThreadId() {
+DWORD __attribute__((stdcall)) GetCurrentThreadId() {
   return pthread_self();
 }
 
-DWORD GetCurrentProcessId() {
+DWORD __attribute__((stdcall)) GetCurrentProcessId() {
   return getpid();
 }
 
-BOOL IsProcessorFeaturePresent(DWORD ProcessorFeature) {
+BOOL __attribute__((stdcall)) IsProcessorFeaturePresent(DWORD ProcessorFeature) {
   if (ProcessorFeature == PF_XMMI64_INSTRUCTIONS_AVAILABLE) {
     //First, push all the registers that will be affected by CPUID
     //We have to restore them later
