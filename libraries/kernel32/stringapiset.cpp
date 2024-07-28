@@ -50,7 +50,7 @@ int __attribute__((stdcall)) MultiByteToWideChar(UINT CodePage, DWORD dwFlags, L
     if (cbMultiByte == -1) {
       int j = 0;
       for (const char* c = lpMultiByteStr; ; c++) {
-        lpWideCharStr[j++] = *c;
+        lpWideCharStr[j++] = (unsigned char)*c;
         if (*c == 0 || j == cchWideChar) {
           break;
         }
@@ -63,7 +63,7 @@ int __attribute__((stdcall)) MultiByteToWideChar(UINT CodePage, DWORD dwFlags, L
     int size = std::min(cbMultiByte, cchWideChar);
     int j = 0;
     for (const char* c = lpMultiByteStr; ; c++) {
-      lpWideCharStr[j++] = *c;
+      lpWideCharStr[j++] = (unsigned char)*c;
       if (j == size) {
         break;
       }
