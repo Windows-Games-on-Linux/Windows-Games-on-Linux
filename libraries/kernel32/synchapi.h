@@ -20,9 +20,15 @@ typedef CRITICAL_SECTION* LPCRITICAL_SECTION;
 
 typedef void (*PTIMERAPCROUTINE)(LPVOID, DWORD, DWORD);
 
+struct Event {
+  bool manualReset;
+  bool signaled;
+};
+
 extern "C" {
   void __attribute__((stdcall)) EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
   void __attribute__((stdcall)) LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
   BOOL __attribute__((stdcall)) InitializeCriticalSectionAndSpinCount(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount);
+  HANDLE __attribute__((stdcall)) CreateEventW(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCWSTR lpName);
 };
 
