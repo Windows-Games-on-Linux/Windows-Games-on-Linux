@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <dlfcn.h>
+#include "processenv.h"
 
 #define DONT_RESOLVE_DLL_REFERENCES         0x00000001
 #define LOAD_IGNORE_CODE_AUTHZ_LEVEL        0x00000010
@@ -136,5 +137,61 @@ HMODULE __attribute__((stdcall)) LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hF
 
 FARPROC __attribute__((stdcall)) GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
   return (FARPROC)dlsym(hModule, lpProcName);
+}
+
+DWORD __attribute__((stdcall)) GetModuleFileNameW(HMODULE hModule, LPWSTR lpFilename, DWORD nSize) {
+  if (hModule) {
+    std::cout << "GetModuleFileNameW: Modules other than the current process are not supported yet" << std::endl;
+    return 0;
+  }
+
+  if (nSize == 0) {
+    return 0;
+  }
+
+  LPWSTR commandLine = GetCommandLineW();
+
+  //The first element in the command line is our executable's path and is terminated with a quote character
+  //First, calculate the length of this path
+  unsigned int size = 0;
+  {
+    const char16_t* c = &commandLine[1]; //Skip the beginning quote character
+    while (true) {
+      size++;
+      if (size == nSize) {
+        break;
+      }
+
+      if (*c == 0 || *c == u'"') {
+        break;
+      }
+
+      c++;
+    }
+  }
+
+  //Now, copy the path
+  const char16_t* c = &commandLine[1];
+  unsigned int i = 0;
+  while (true) {
+    if (i < size - 1) {
+      lpFilename[i++] = *c;
+    } else {
+      lpFilename[i++] = 0;
+    }
+
+    if (i == size) {
+      break;
+    }
+
+    if (*c == 0 || *c == u'"') {
+      break;
+    }
+
+    c++;
+  }
+
+  //Return the length of the copied string (not including the NULL character)
+  return size - 1;
 }
 
