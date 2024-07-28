@@ -57,11 +57,15 @@ namespace {
       libraryPath += "./";
     }
 
-    libraryPath += library;
+    if (library.rfind(".dll") == library.length() - 4) {
+      libraryPath += library.substr(0, library.length() - 4) + ".so";
+    } else {
+      libraryPath += library;
 
-    if (library.find('.') == -1) {
-      //Currently for simplicity implementations of Windows libraries are loaded from native .so files
-      libraryPath += ".so";
+      if (library.find('.') == -1) {
+        //Currently for simplicity implementations of Windows libraries are loaded from native .so files
+        libraryPath += ".so";
+      }
     }
 
     for (auto& c : libraryPath) {
@@ -193,5 +197,18 @@ DWORD __attribute__((stdcall)) GetModuleFileNameW(HMODULE hModule, LPWSTR lpFile
 
   //Return the length of the copied string (not including the NULL character)
   return size - 1;
+}
+
+HMODULE __attribute__((stdcall)) GetModuleHandleW(LPCWSTR lpModuleName) {
+  if (lpModuleName == nullptr) {
+    //Linux doesn't support executable handles
+    //Let's just assume the value 5 to be our executable's handle
+    return (HMODULE)5;
+  }
+
+  //Otherwise, get a handle to an already loaded shared library
+  std::string libFileName = LPCWSTR_to_string(lpModuleName);
+  std::string libraryPath = getLibraryPath(libFileName);
+  return dlopen(libraryPath.c_str(), RTLD_LAZY | RTLD_NOLOAD);
 }
 
