@@ -1,6 +1,7 @@
 #include "synchapi.h"
 
 #include <pthread.h>
+#include <iostream>
 
 void __attribute__((stdcall)) EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
   //TODO: Implement the EXCEPTION_POSSIBLE_DEADLOCK exception
@@ -39,5 +40,25 @@ BOOL __attribute__((stdcall)) InitializeCriticalSectionAndSpinCount(LPCRITICAL_S
   lpCriticalSection->SpinCount = dwSpinCount;
 
   return 1;
+}
+
+HANDLE __attribute__((stdcall)) CreateEventW(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCWSTR lpName) {
+  if (lpEventAttributes) {
+    std::cout << "CreateEventW: lpEventAttributes is not implemented" << std::endl;
+  }
+
+  if (!bManualReset) {
+    std::cout << "CreateEventW: Auto-reset event objects are not implemented" << std::endl;
+  }
+
+  if (lpName) {
+    std::cout << "CreateEventW: Named events are not implemented" << std::endl;
+  }
+
+  Event* event = new Event();
+  event->manualReset = bManualReset;
+  event->signaled = bInitialState;
+
+  return event;
 }
 
