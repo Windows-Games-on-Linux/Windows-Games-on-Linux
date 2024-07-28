@@ -1,6 +1,7 @@
 #include "stringapiset.h"
 
 #include <iostream>
+#include <cwctype>
 
 int __attribute__((stdcall)) MultiByteToWideChar(UINT CodePage, DWORD dwFlags, LPCCH lpMultiByteStr, int cbMultiByte, LPWSTR lpWideCharStr, int cchWideChar) {
   if (dwFlags & MB_COMPOSITE) {
@@ -72,6 +73,85 @@ int __attribute__((stdcall)) MultiByteToWideChar(UINT CodePage, DWORD dwFlags, L
   }
 
   std::cout << "MultiByteToWideChar: Unimplemented Code Page Identifier: " << CodePage << std::endl;
+  return 0;
+}
+
+BOOL __attribute__((stdcall)) GetStringTypeW(DWORD dwInfoType, LPCWCH lpSrcStr, int cchSrc, LPWORD lpCharType) {
+  if (cchSrc == 0) {
+    return 0;
+  }
+
+  if (dwInfoType == CT_CTYPE1) {
+    int i = 0;
+    for (const char16_t* c = lpSrcStr; ; c++) {
+      lpCharType[i] = 0;
+
+      bool typeFound = false;
+
+      if (iswupper(*c)) {
+        lpCharType[i] |= C1_UPPER;
+        typeFound = true;
+      }
+
+      if (iswlower(*c)) {
+        lpCharType[i] |= C1_LOWER;
+        typeFound = true;
+      }
+
+      if (iswdigit(*c)) {
+        lpCharType[i] |= C1_DIGIT;
+        typeFound = true;
+      }
+
+      if (iswspace(*c)) {
+        lpCharType[i] |= C1_SPACE;
+        typeFound = true;
+      }
+
+      if (iswpunct(*c)) {
+        lpCharType[i] |= C1_PUNCT;
+        typeFound = true;
+      }
+
+      if (iswcntrl(*c)) {
+        lpCharType[i] |= C1_CNTRL;
+        typeFound = true;
+      }
+
+      if (iswblank(*c)) {
+        lpCharType[i] |= C1_BLANK;
+        typeFound = true;
+      }
+
+      if (iswxdigit(*c)) {
+        lpCharType[i] |= C1_XDIGIT;
+        typeFound = true;
+      }
+
+      if (iswalpha(*c)) {
+        lpCharType[i] |= C1_ALPHA;
+        typeFound = true;
+      }
+
+      if (!typeFound) {
+        lpCharType[i] = C1_DEFINED;
+      }
+
+      i++;
+
+      if (cchSrc < 0 && *c == 0) {
+        break;
+      }
+
+      if (i == cchSrc) {
+        break;
+      }
+    }
+
+    return 1;
+  }
+
+  std::cout << "GetStringTypeW: Unimplemented Info Type: " << dwInfoType << std::endl;
   return 0;
 }
 
