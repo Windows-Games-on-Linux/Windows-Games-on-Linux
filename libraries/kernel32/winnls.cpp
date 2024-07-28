@@ -24,3 +24,17 @@ BOOL __attribute__((stdcall)) IsValidCodePage(UINT CodePage) {
   return 0;
 }
 
+BOOL __attribute__((stdcall)) GetCPInfo(UINT CodePage, LPCPINFO lpCPInfo) {
+  if (CodePage == 1252) {
+    lpCPInfo->MaxCharSize = 1;
+    lpCPInfo->DefaultChar[0] = '?';
+    lpCPInfo->DefaultChar[1] = 0;
+    memset(lpCPInfo->LeadByte, 0, sizeof(lpCPInfo->LeadByte));
+
+    return 1;
+  }
+
+  std::cout << "GetCPInfo: Unimplemented Code Page Identifier: " << CodePage << std::endl;
+  return 0;
+}
+
