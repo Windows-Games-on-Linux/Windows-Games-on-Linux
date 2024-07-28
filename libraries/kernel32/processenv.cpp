@@ -346,3 +346,8 @@ LPWCH __attribute__((stdcall)) GetEnvironmentStringsW() {
   return environmentStringsW;
 }
 
+BOOL __attribute__((stdcall)) FreeEnvironmentStringsW(LPWCH penv) {
+  delete[] penv;
+  return 1;
+}
+

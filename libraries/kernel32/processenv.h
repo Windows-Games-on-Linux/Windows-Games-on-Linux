@@ -11,5 +11,6 @@ extern "C" {
   LPSTR __attribute__((stdcall)) GetCommandLineA();
   LPWSTR __attribute__((stdcall)) GetCommandLineW();
   LPWCH __attribute__((stdcall)) GetEnvironmentStringsW();
+  BOOL __attribute__((stdcall)) FreeEnvironmentStringsW(LPWCH penv);
 };
 
