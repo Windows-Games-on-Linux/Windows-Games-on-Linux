@@ -10,3 +10,9 @@ BOOL __attribute__((stdcall)) QueryPerformanceCounter(LARGE_INTEGER* lpPerforman
 
   return 1;
 }
+
+BOOL __attribute__((stdcall)) QueryPerformanceFrequency(LARGE_INTEGER* lpFrequency) {
+  lpFrequency->QuadPart = 1000000000ULL;
+  return 1;
+}
+
