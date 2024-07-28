@@ -28,5 +28,6 @@ typedef CPINFO* LPCPINFO;
 extern "C" {
   UINT __attribute__((stdcall)) GetACP();
   BOOL __attribute__((stdcall)) IsValidCodePage(UINT CodePage);
+  BOOL __attribute__((stdcall)) GetCPInfo(UINT CodePage, LPCPINFO lpCPInfo);
 };
 
