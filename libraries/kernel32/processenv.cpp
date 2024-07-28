@@ -308,3 +308,41 @@ LPWSTR __attribute__((stdcall)) GetCommandLineW() {
   return commandLineW;
 }
 
+LPWCH __attribute__((stdcall)) GetEnvironmentStringsW() {
+  extern char** environ;
+
+  //First, calculate the total size of all environment strings (including NULL characters)
+  int size = 0;
+  {
+    char** str = environ;
+    while (*str) {
+      size += strlen(*str) + 1;
+      str++;
+    }
+
+    //Final NULL character
+    size++;
+  }
+
+  //Now, allocate the buffer and copy the strings
+  LPWCH environmentStringsW = new char16_t[size];
+  {
+    int i = 0;
+    char** str = environ;
+    while (*str) {
+      for (char* c = *str; ; c++) {
+        environmentStringsW[i++] = (unsigned char)*c;
+        if (*c == 0) {
+          break;
+        }
+      }
+
+      str++;
+    }
+
+    environmentStringsW[i++] = 0;
+  }
+
+  return environmentStringsW;
+}
+
