@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cuchar>
 #include "intsafe.h"
 
 #define VOID void
@@ -20,7 +21,7 @@ typedef WORD         LANGID;
 typedef DWORD        LCID;
 typedef int64_t      LONGLONG;
 typedef CONST CHAR*  LPCSTR;
-typedef wchar_t      WCHAR;
+typedef char16_t     WCHAR;
 typedef CONST WCHAR* LPCWSTR;
 typedef CHAR*        LPSTR;
 typedef WCHAR*       LPWSTR;

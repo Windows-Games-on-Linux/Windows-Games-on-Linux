@@ -238,7 +238,7 @@ LPWSTR __attribute__((stdcall)) GetCommandLineW() {
   }
 
   //Now, allocate a command line buffer and write to it using an algorithm similar to the above one
-  commandLineW = new wchar_t[length + 1];
+  commandLineW = new char16_t[length + 1];
 
   //The current position in the command line buffer
   int j = 0;
