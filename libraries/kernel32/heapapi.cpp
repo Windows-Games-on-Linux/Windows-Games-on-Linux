@@ -36,3 +36,18 @@ LPVOID __attribute__((stdcall)) HeapAlloc(HANDLE hHeap, DWORD dwFlags, SIZE_T dw
   return memory;
 }
 
+BOOL __attribute__((stdcall)) HeapFree(HANDLE hHeap, DWORD dwFlags, LPVOID lpMem) {
+  //For now only the default heap is supported
+  if (hHeap != (HANDLE)1) {
+    std::cout << "HeapFree: Heaps other than the default one are not supported" << std::endl;
+    return 0;
+  }
+
+  if (dwFlags & HEAP_NO_SERIALIZE) {
+    std::cout << "HeapFree: Unimplemented Flag: HEAP_NO_SERIALIZE" << std::endl;
+  }
+
+  free(lpMem);
+  return 1;
+}
+
