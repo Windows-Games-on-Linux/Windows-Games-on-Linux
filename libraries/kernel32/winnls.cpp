@@ -14,3 +14,13 @@ UINT __attribute__((stdcall)) GetACP() {
   return 0;
 }
 
+BOOL __attribute__((stdcall)) IsValidCodePage(UINT CodePage) {
+  if (CodePage == 1252) {
+    return 1;
+  }
+
+  //For now just assume that every other code page identifier is unimplemented
+  std::cout << "IsValidCodePage: Unimplemented Code Page Identifier" << std::endl;
+  return 0;
+}
+
