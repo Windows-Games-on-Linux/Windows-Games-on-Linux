@@ -24,3 +24,8 @@ struct CPINFO {
 typedef NLSVERSIONINFO* LPNLSVERSIONINFO;
 
 typedef CPINFO* LPCPINFO;
+
+extern "C" {
+  UINT __attribute__((stdcall)) GetACP();
+};
+
