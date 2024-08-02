@@ -1,6 +1,6 @@
 #include "interlockedapi.h"
 
-void __attribute__((stdcall)) InitializeSListHead(PSLIST_HEADER ListHead) {
+void WINAPI InitializeSListHead(PSLIST_HEADER ListHead) {
   //For now, let's ignore the Region field
 
   ListHead->HeaderX64.Depth = 0;

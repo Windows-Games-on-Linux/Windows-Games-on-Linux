@@ -3,7 +3,7 @@
 #include <cstring>
 #include <iostream>
 
-UINT __attribute__((stdcall)) GetACP() {
+UINT WINAPI GetACP() {
   char* locale = setlocale(LC_CTYPE, nullptr);
 
   if (strcmp(locale, "C") == 0) {
@@ -14,7 +14,7 @@ UINT __attribute__((stdcall)) GetACP() {
   return 0;
 }
 
-BOOL __attribute__((stdcall)) IsValidCodePage(UINT CodePage) {
+BOOL WINAPI IsValidCodePage(UINT CodePage) {
   if (CodePage == 1252) {
     return 1;
   }
@@ -24,7 +24,7 @@ BOOL __attribute__((stdcall)) IsValidCodePage(UINT CodePage) {
   return 0;
 }
 
-BOOL __attribute__((stdcall)) GetCPInfo(UINT CodePage, LPCPINFO lpCPInfo) {
+BOOL WINAPI GetCPInfo(UINT CodePage, LPCPINFO lpCPInfo) {
   if (CodePage == 1252) {
     lpCPInfo->MaxCharSize = 1;
     lpCPInfo->DefaultChar[0] = '?';

@@ -26,9 +26,9 @@ struct Event {
 };
 
 extern "C" {
-  void __attribute__((stdcall)) EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
-  void __attribute__((stdcall)) LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
-  BOOL __attribute__((stdcall)) InitializeCriticalSectionAndSpinCount(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount);
-  HANDLE __attribute__((stdcall)) CreateEventW(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCWSTR lpName);
+  void WINAPI EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
+  void WINAPI LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
+  BOOL WINAPI InitializeCriticalSectionAndSpinCount(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount);
+  HANDLE WINAPI CreateEventW(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCWSTR lpName);
 };
 

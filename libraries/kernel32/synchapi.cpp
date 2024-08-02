@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <iostream>
 
-void __attribute__((stdcall)) EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
+void WINAPI EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
   //TODO: Implement the EXCEPTION_POSSIBLE_DEADLOCK exception
   //This exception requires a timeout specified in the following registry value:
   //HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SessionManager\CriticalSectionTimeout
@@ -13,12 +13,12 @@ void __attribute__((stdcall)) EnterCriticalSection(LPCRITICAL_SECTION lpCritical
   lpCriticalSection->LockCount++;
 }
 
-void __attribute__((stdcall)) LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
+void WINAPI LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
   lpCriticalSection->LockCount--;
   pthread_mutex_unlock((pthread_mutex_t*)lpCriticalSection->LockSemaphore);
 }
 
-BOOL __attribute__((stdcall)) InitializeCriticalSectionAndSpinCount(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount) {
+BOOL WINAPI InitializeCriticalSectionAndSpinCount(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount) {
   pthread_mutexattr_t mutexattr;
   pthread_mutexattr_init(&mutexattr);
 
@@ -42,7 +42,7 @@ BOOL __attribute__((stdcall)) InitializeCriticalSectionAndSpinCount(LPCRITICAL_S
   return 1;
 }
 
-HANDLE __attribute__((stdcall)) CreateEventW(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCWSTR lpName) {
+HANDLE WINAPI CreateEventW(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCWSTR lpName) {
   if (lpEventAttributes) {
     std::cout << "CreateEventW: lpEventAttributes is not implemented" << std::endl;
   }

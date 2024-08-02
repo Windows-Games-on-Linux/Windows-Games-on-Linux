@@ -3,6 +3,6 @@
 #include "wdm.h"
 
 extern "C" {
-  void __attribute__((stdcall)) InitializeSListHead(PSLIST_HEADER ListHead);
+  void WINAPI InitializeSListHead(PSLIST_HEADER ListHead);
 };
 

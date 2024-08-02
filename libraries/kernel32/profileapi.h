@@ -3,7 +3,7 @@
 #include <windef.h>
 
 extern "C" {
-  BOOL __attribute__((stdcall)) QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount);
-  BOOL __attribute__((stdcall)) QueryPerformanceFrequency(LARGE_INTEGER* lpFrequency);
+  BOOL WINAPI QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount);
+  BOOL WINAPI QueryPerformanceFrequency(LARGE_INTEGER* lpFrequency);
 };
 

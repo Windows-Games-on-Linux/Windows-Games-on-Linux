@@ -3,9 +3,9 @@
 #include <windef.h>
 
 extern "C" {
-  HMODULE __attribute__((stdcall)) LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags);
-  FARPROC __attribute__((stdcall)) GetProcAddress(HMODULE hModule, LPCSTR lpProcName);
-  DWORD __attribute__((stdcall)) GetModuleFileNameW(HMODULE hModule, LPWSTR lpFilename, DWORD nSize);
-  HMODULE __attribute__((stdcall)) GetModuleHandleW(LPCWSTR lpModuleName);
+  HMODULE WINAPI LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags);
+  FARPROC WINAPI GetProcAddress(HMODULE hModule, LPCSTR lpProcName);
+  DWORD WINAPI GetModuleFileNameW(HMODULE hModule, LPWSTR lpFilename, DWORD nSize);
+  HMODULE WINAPI GetModuleHandleW(LPCWSTR lpModuleName);
 };
 

@@ -25,6 +25,6 @@ typedef BY_HANDLE_FILE_INFORMATION* PBY_HANDLE_FILE_INFORMATION;
 typedef BY_HANDLE_FILE_INFORMATION* LPBY_HANDLE_FILE_INFORMATION;
 
 extern "C" {
-  DWORD __attribute__((stdcall)) GetFileType(HANDLE hFile);
+  DWORD WINAPI GetFileType(HANDLE hFile);
 };
 

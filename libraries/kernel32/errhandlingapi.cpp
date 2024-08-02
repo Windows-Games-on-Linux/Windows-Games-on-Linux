@@ -2,11 +2,11 @@
 
 __thread DWORD lastError = 0;
 
-DWORD __attribute__((stdcall)) GetLastError() {
+DWORD WINAPI GetLastError() {
   return lastError;
 }
 
-void __attribute__((stdcall)) SetLastError(DWORD dwErrorCode) {
+void WINAPI SetLastError(DWORD dwErrorCode) {
   lastError = dwErrorCode;
 }
 

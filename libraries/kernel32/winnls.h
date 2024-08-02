@@ -26,8 +26,8 @@ typedef NLSVERSIONINFO* LPNLSVERSIONINFO;
 typedef CPINFO* LPCPINFO;
 
 extern "C" {
-  UINT __attribute__((stdcall)) GetACP();
-  BOOL __attribute__((stdcall)) IsValidCodePage(UINT CodePage);
-  BOOL __attribute__((stdcall)) GetCPInfo(UINT CodePage, LPCPINFO lpCPInfo);
+  UINT WINAPI GetACP();
+  BOOL WINAPI IsValidCodePage(UINT CodePage);
+  BOOL WINAPI GetCPInfo(UINT CodePage, LPCPINFO lpCPInfo);
 };
 
