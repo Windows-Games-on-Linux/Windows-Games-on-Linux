@@ -9,3 +9,7 @@ DWORD WINAPI FlsAlloc(PFLS_CALLBACK_FUNCTION lpCallback) {
   return key;
 }
 
+PVOID WINAPI FlsGetValue(DWORD dwFlsIndex) {
+  return pthread_getspecific(dwFlsIndex);
+}
+
