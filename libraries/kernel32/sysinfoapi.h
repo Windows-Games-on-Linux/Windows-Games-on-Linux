@@ -38,5 +38,5 @@ typedef MEMORYSTATUSEX* LPMEMORYSTATUSEX;
 typedef SYSTEM_INFO* LPSYSTEM_INFO;
 
 extern "C" {
-  void __attribute__((stdcall)) GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime);
+  void WINAPI GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime);
 };

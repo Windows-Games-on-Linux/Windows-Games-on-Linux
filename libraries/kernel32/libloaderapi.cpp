@@ -78,7 +78,7 @@ namespace {
   }
 };
 
-HMODULE __attribute__((stdcall)) LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) {
+HMODULE WINAPI LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) {
   //TODO: Implement the LOAD_LIBRARY_SEARCH_SYSTEM32 flag
   //We need a directory that will emulate the system32 directory
   //For now let's just load the libraries from the working path
@@ -139,11 +139,11 @@ HMODULE __attribute__((stdcall)) LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hF
   return dlopen(libraryPath.c_str(), RTLD_LAZY);
 }
 
-FARPROC __attribute__((stdcall)) GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
+FARPROC WINAPI GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
   return (FARPROC)dlsym(hModule, lpProcName);
 }
 
-DWORD __attribute__((stdcall)) GetModuleFileNameW(HMODULE hModule, LPWSTR lpFilename, DWORD nSize) {
+DWORD WINAPI GetModuleFileNameW(HMODULE hModule, LPWSTR lpFilename, DWORD nSize) {
   if (hModule) {
     std::cout << "GetModuleFileNameW: Modules other than the current process are not supported yet" << std::endl;
     return 0;
@@ -199,7 +199,7 @@ DWORD __attribute__((stdcall)) GetModuleFileNameW(HMODULE hModule, LPWSTR lpFile
   return size - 1;
 }
 
-HMODULE __attribute__((stdcall)) GetModuleHandleW(LPCWSTR lpModuleName) {
+HMODULE WINAPI GetModuleHandleW(LPCWSTR lpModuleName) {
   if (lpModuleName == nullptr) {
     //Linux doesn't support executable handles
     //Let's just assume the value 5 to be our executable's handle

@@ -7,7 +7,7 @@
 LPSTR commandLineA = nullptr;
 LPWSTR commandLineW = nullptr;
 
-HANDLE __attribute__((stdcall)) GetStdHandle(DWORD nStdHandle) {
+HANDLE WINAPI GetStdHandle(DWORD nStdHandle) {
   //Let's assume the following handle values:
   // - STD_INPUT_HANDLE: 2
   // - STD_OUTPUT_HANDLE: 3
@@ -28,7 +28,7 @@ HANDLE __attribute__((stdcall)) GetStdHandle(DWORD nStdHandle) {
   return nullptr;
 }
 
-LPSTR __attribute__((stdcall)) GetCommandLineA() {
+LPSTR WINAPI GetCommandLineA() {
   //If the command line buffer is already available, simply return it
   if (commandLineA) {
     return commandLineA;
@@ -168,7 +168,7 @@ LPSTR __attribute__((stdcall)) GetCommandLineA() {
   return commandLineA;
 }
 
-LPWSTR __attribute__((stdcall)) GetCommandLineW() {
+LPWSTR WINAPI GetCommandLineW() {
   //If the command line buffer is already available, simply return it
   if (commandLineW) {
     return commandLineW;
@@ -308,7 +308,7 @@ LPWSTR __attribute__((stdcall)) GetCommandLineW() {
   return commandLineW;
 }
 
-LPWCH __attribute__((stdcall)) GetEnvironmentStringsW() {
+LPWCH WINAPI GetEnvironmentStringsW() {
   extern char** environ;
 
   //First, calculate the total size of all environment strings (including NULL characters)
@@ -346,7 +346,7 @@ LPWCH __attribute__((stdcall)) GetEnvironmentStringsW() {
   return environmentStringsW;
 }
 
-BOOL __attribute__((stdcall)) FreeEnvironmentStringsW(LPWCH penv) {
+BOOL WINAPI FreeEnvironmentStringsW(LPWCH penv) {
   delete[] penv;
   return 1;
 }

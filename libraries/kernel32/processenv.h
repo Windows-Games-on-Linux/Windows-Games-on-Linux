@@ -7,10 +7,10 @@
 #define STD_ERROR_HANDLE  ((DWORD)-12)
 
 extern "C" {
-  HANDLE __attribute__((stdcall)) GetStdHandle(DWORD nStdHandle);
-  LPSTR __attribute__((stdcall)) GetCommandLineA();
-  LPWSTR __attribute__((stdcall)) GetCommandLineW();
-  LPWCH __attribute__((stdcall)) GetEnvironmentStringsW();
-  BOOL __attribute__((stdcall)) FreeEnvironmentStringsW(LPWCH penv);
+  HANDLE WINAPI GetStdHandle(DWORD nStdHandle);
+  LPSTR WINAPI GetCommandLineA();
+  LPWSTR WINAPI GetCommandLineW();
+  LPWCH WINAPI GetEnvironmentStringsW();
+  BOOL WINAPI FreeEnvironmentStringsW(LPWCH penv);
 };
 

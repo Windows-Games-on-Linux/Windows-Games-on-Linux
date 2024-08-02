@@ -3,7 +3,7 @@
 #include <sys/stat.h>
 #include <cstdio>
 
-DWORD __attribute__((stdcall)) GetFileType(HANDLE hFile) {
+DWORD WINAPI GetFileType(HANDLE hFile) {
   int fd = -1;
 
   //For now, only the standard handles are supported

@@ -7,8 +7,8 @@
 #define HEAP_ZERO_MEMORY         0x00000008
 
 extern "C" {
-  HANDLE __attribute__((stdcall)) GetProcessHeap();
-  LPVOID __attribute__((stdcall)) HeapAlloc(HANDLE hHeap, DWORD dwFlags, SIZE_T dwBytes);
-  BOOL __attribute__((stdcall)) HeapFree(HANDLE hHeap, DWORD dwFlags, LPVOID lpMem);
+  HANDLE WINAPI GetProcessHeap();
+  LPVOID WINAPI HeapAlloc(HANDLE hHeap, DWORD dwFlags, SIZE_T dwBytes);
+  BOOL WINAPI HeapFree(HANDLE hHeap, DWORD dwFlags, LPVOID lpMem);
 };
 

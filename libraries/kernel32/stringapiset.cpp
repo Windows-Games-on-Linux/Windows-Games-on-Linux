@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cwctype>
 
-int __attribute__((stdcall)) MultiByteToWideChar(UINT CodePage, DWORD dwFlags, LPCCH lpMultiByteStr, int cbMultiByte, LPWSTR lpWideCharStr, int cchWideChar) {
+int WINAPI MultiByteToWideChar(UINT CodePage, DWORD dwFlags, LPCCH lpMultiByteStr, int cbMultiByte, LPWSTR lpWideCharStr, int cchWideChar) {
   if (dwFlags & MB_COMPOSITE) {
     std::cout << "MultiByteToWideChar: Unimplemented Flag: MB_COMPOSITE" << std::endl;
   }
@@ -76,7 +76,7 @@ int __attribute__((stdcall)) MultiByteToWideChar(UINT CodePage, DWORD dwFlags, L
   return 0;
 }
 
-BOOL __attribute__((stdcall)) GetStringTypeW(DWORD dwInfoType, LPCWCH lpSrcStr, int cchSrc, LPWORD lpCharType) {
+BOOL WINAPI GetStringTypeW(DWORD dwInfoType, LPCWCH lpSrcStr, int cchSrc, LPWORD lpCharType) {
   if (cchSrc == 0) {
     return 0;
   }
@@ -155,7 +155,7 @@ BOOL __attribute__((stdcall)) GetStringTypeW(DWORD dwInfoType, LPCWCH lpSrcStr, 
   return 0;
 }
 
-int __attribute__((stdcall)) WideCharToMultiByte(UINT CodePage, DWORD dwFlags, LPCWCH lpWideCharStr, int cchWideChar, LPSTR lpMultiByteStr, int cbMultiByte, LPCCH lpDefaultChar, LPBOOL lpUsedDefaultChar) {
+int WINAPI WideCharToMultiByte(UINT CodePage, DWORD dwFlags, LPCWCH lpWideCharStr, int cchWideChar, LPSTR lpMultiByteStr, int cbMultiByte, LPCCH lpDefaultChar, LPBOOL lpUsedDefaultChar) {
   if (dwFlags & WC_COMPOSITECHECK) {
     std::cout << "WideCharToMultiByte: Unimplemented Flag: WC_COMPOSITECHECK" << std::endl;
   }

@@ -4,22 +4,31 @@
 #include <unistd.h>
 #include <iostream>
 
-DWORD __attribute__((stdcall)) GetCurrentThreadId() {
+DWORD WINAPI GetCurrentThreadId() {
   return pthread_self();
 }
 
-DWORD __attribute__((stdcall)) GetCurrentProcessId() {
+DWORD WINAPI GetCurrentProcessId() {
   return getpid();
 }
 
-BOOL __attribute__((stdcall)) IsProcessorFeaturePresent(DWORD ProcessorFeature) {
+BOOL WINAPI IsProcessorFeaturePresent(DWORD ProcessorFeature) {
   if (ProcessorFeature == PF_XMMI64_INSTRUCTIONS_AVAILABLE) {
     //First, push all the registers that will be affected by CPUID
     //We have to restore them later
-    asm ("push %eax");
-    asm ("push %ebx");
-    asm ("push %ecx");
-    asm ("push %edx");
+    #if defined(__x86_64__)
+      asm ("push %rax");
+      asm ("push %rbx");
+      asm ("push %rcx");
+      asm ("push %rdx");
+    #elif defined(__i386)
+      asm ("push %eax");
+      asm ("push %ebx");
+      asm ("push %ecx");
+      asm ("push %edx");
+    #else
+      #error "Unsupported architecture"
+    #endif
 
     //Query available processor features
     asm ("mov $1, %eax");
@@ -32,10 +41,19 @@ BOOL __attribute__((stdcall)) IsProcessorFeaturePresent(DWORD ProcessorFeature) 
     asm volatile ("movl %%edx, %0" : "=r" (available));
 
     //Restore the registers we pushed previously
-    asm ("pop %edx");
-    asm ("pop %ecx");
-    asm ("pop %ebx");
-    asm ("pop %eax");
+    #if defined(__x86_64__)
+      asm ("pop %rdx");
+      asm ("pop %rcx");
+      asm ("pop %rbx");
+      asm ("pop %rax");
+    #elif defined(__i386)
+      asm ("pop %edx");
+      asm ("pop %ecx");
+      asm ("pop %ebx");
+      asm ("pop %eax");
+    #else
+      #error "Unsupported architecture"
+    #endif
 
     return available;
   }
