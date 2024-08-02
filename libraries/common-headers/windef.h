@@ -4,7 +4,12 @@
 #include "basetsd.h"
 #include "guiddef.h"
 
-#define WINAPI
+#if defined(__x86_64__)
+  #define WINAPI __attribute__((ms_abi))
+#elif defined(__i386)
+  #define WINAPI __attribute__((stdcall))
+#endif
+
 #define CALLBACK
 #define CONST const
 
