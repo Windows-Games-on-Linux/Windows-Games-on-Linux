@@ -3,7 +3,7 @@
 #include <windef.h>
 
 extern "C" {
-  DWORD __attribute__((stdcall)) FlsAlloc(PFLS_CALLBACK_FUNCTION lpCallback);
-  BOOL __attribute__((stdcall)) FlsSetValue(DWORD dwFlsIndex, PVOID lpFlsData);
+  DWORD WINAPI FlsAlloc(PFLS_CALLBACK_FUNCTION lpCallback);
+  BOOL WINAPI FlsSetValue(DWORD dwFlsIndex, PVOID lpFlsData);
 };
 

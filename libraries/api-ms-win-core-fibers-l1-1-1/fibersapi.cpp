@@ -2,14 +2,14 @@
 
 #include <pthread.h>
 
-DWORD __attribute__((stdcall)) FlsAlloc(PFLS_CALLBACK_FUNCTION lpCallback) {
+DWORD WINAPI FlsAlloc(PFLS_CALLBACK_FUNCTION lpCallback) {
   pthread_key_t key;
   pthread_key_create(&key, lpCallback);
 
   return key;
 }
 
-BOOL __attribute__((stdcall)) FlsSetValue(DWORD dwFlsIndex, PVOID lpFlsData) {
+BOOL WINAPI FlsSetValue(DWORD dwFlsIndex, PVOID lpFlsData) {
   pthread_setspecific(dwFlsIndex, lpFlsData);
   return 1;
 }
