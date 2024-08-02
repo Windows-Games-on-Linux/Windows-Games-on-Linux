@@ -2,7 +2,7 @@
 
 #include <pthread.h>
 
-BOOL __attribute__((stdcall)) InitializeCriticalSectionEx(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount, DWORD Flags) {
+BOOL WINAPI InitializeCriticalSectionEx(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount, DWORD Flags) {
   pthread_mutexattr_t mutexattr;
   pthread_mutexattr_init(&mutexattr);
 

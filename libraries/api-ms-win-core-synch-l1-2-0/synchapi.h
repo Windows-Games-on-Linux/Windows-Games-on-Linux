@@ -11,6 +11,6 @@ typedef CRITICAL_SECTION* PCRITICAL_SECTION;
 typedef CRITICAL_SECTION* LPCRITICAL_SECTION;
 
 extern "C" {
-  BOOL __attribute__((stdcall)) InitializeCriticalSectionEx(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount, DWORD Flags);
+  BOOL WINAPI InitializeCriticalSectionEx(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount, DWORD Flags);
 };
 
