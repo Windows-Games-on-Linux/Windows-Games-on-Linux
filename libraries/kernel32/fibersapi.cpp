@@ -13,3 +13,8 @@ PVOID WINAPI FlsGetValue(DWORD dwFlsIndex) {
   return pthread_getspecific(dwFlsIndex);
 }
 
+BOOL WINAPI FlsSetValue(DWORD dwFlsIndex, PVOID lpFlsData) {
+  pthread_setspecific(dwFlsIndex, lpFlsData);
+  return 1;
+}
+
