@@ -13,7 +13,9 @@ DWORD WINAPI GetCurrentProcessId() {
 }
 
 BOOL WINAPI IsProcessorFeaturePresent(DWORD ProcessorFeature) {
-  if (ProcessorFeature == PF_XMMI64_INSTRUCTIONS_AVAILABLE) {
+  if (ProcessorFeature == PF_XMMI64_INSTRUCTIONS_AVAILABLE
+   || ProcessorFeature == PF_FASTFAIL_AVAILABLE
+  ) {
     //First, push all the registers that will be affected by CPUID
     //We have to restore them later
     #if defined(__x86_64__)
@@ -30,15 +32,31 @@ BOOL WINAPI IsProcessorFeaturePresent(DWORD ProcessorFeature) {
       #error "Unsupported architecture"
     #endif
 
-    //Query available processor features
-    asm ("mov $1, %eax");
-    asm ("cpuid");
-
-    //Bit 26 of EDX determines whether SSE2 is available
     BOOL available;
-    asm ("and $0x04000000, %edx");
-    asm ("shr $26, %edx");
-    asm volatile ("movl %%edx, %0" : "=r" (available));
+
+    //Query available processor features
+    if (ProcessorFeature == PF_XMMI64_INSTRUCTIONS_AVAILABLE) {
+      asm ("mov $1, %eax");
+      asm ("cpuid");
+
+      //Bit 26 of EDX determines whether SSE2 is available
+      asm ("and $0x04000000, %edx");
+      asm ("shr $26, %edx");
+      asm volatile ("movl %%edx, %0" : "=r" (available));
+    } else if (ProcessorFeature == PF_FASTFAIL_AVAILABLE) {
+      asm ("mov $7, %eax");
+      asm ("cpuid");
+
+      //Bit 7 of EBX determines whether SMEP is available
+      //Bit 20 determines whether SMAP is available
+      asm ("and $0x00100080, %ebx");
+      asm volatile ("movl %%ebx, %0" : "=r" (available));
+      if ((available & 0x00100000) && (available & 0x00000080)) {
+        available = 1;
+      } else {
+        available = 0;
+      }
+    }
 
     //Restore the registers we pushed previously
     #if defined(__x86_64__)
