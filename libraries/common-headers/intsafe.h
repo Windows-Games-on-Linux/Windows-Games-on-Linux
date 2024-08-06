@@ -2,5 +2,5 @@
 
 #include <cstdint>
 
-typedef unsigned long DWORD;
+typedef unsigned int  DWORD;
 typedef uint64_t      DWORDLONG;
