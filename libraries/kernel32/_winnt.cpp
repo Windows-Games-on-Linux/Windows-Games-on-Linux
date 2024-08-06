@@ -56,3 +56,9 @@ VOID WINAPI RtlCaptureContext(PCONTEXT ContextRecord) {
   #endif
 }
 
+PRUNTIME_FUNCTION WINAPI RtlLookupFunctionEntry(DWORD64 ControlPc, PDWORD64 ImageBase, PUNWIND_HISTORY_TABLE HistoryTable) {
+  //TODO: This function requires the function table
+  //For now let's just assume that it doesn't exist
+  return nullptr;
+}
+
