@@ -8,4 +8,5 @@ struct GUID {
 };
 
 typedef GUID IID;
+typedef GUID CLSID;
 
