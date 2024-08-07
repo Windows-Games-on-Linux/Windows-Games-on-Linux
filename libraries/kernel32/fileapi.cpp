@@ -47,3 +47,7 @@ DWORD WINAPI GetFileType(HANDLE hFile) {
   return FILE_TYPE_UNKNOWN;
 }
 
+BOOL WINAPI AreFileApisANSI() {
+  return 0;
+}
+
