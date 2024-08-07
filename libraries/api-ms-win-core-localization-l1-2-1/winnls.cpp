@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-int __attribute__((stdcall)) LCMapStringEx(LPCWSTR lpLocaleName, DWORD dwMapFlags, LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest, LPNLSVERSIONINFO lpVersionInformation, LPVOID lpReserved, LPARAM sortHandle) {
+int WINAPI LCMapStringEx(LPCWSTR lpLocaleName, DWORD dwMapFlags, LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest, LPNLSVERSIONINFO lpVersionInformation, LPVOID lpReserved, LPARAM sortHandle) {
   if (lpLocaleName != LOCALE_NAME_USER_DEFAULT) {
     std::cout << "LCMapStringEx: Unimplemented Locale Name" << std::endl;
   }
