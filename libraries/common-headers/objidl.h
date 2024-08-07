@@ -34,3 +34,12 @@ class IStream : public ISequentialStream {
   virtual HRESULT WINAPI Clone(IStream** ppstm) = 0;
 };
 
+class IMarshal : public IUnknown {
+  virtual HRESULT WINAPI GetUnmarshalClass(REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags, CLSID* pCid) = 0;
+  virtual HRESULT WINAPI GetMarshalSizeMax(REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags, DWORD* pSize) = 0;
+  virtual HRESULT WINAPI MarshalInterface(IStream* pStm, REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags) = 0;
+  virtual HRESULT WINAPI UnmarshalInterface(IStream* pStm, REFIID riid, void** ppv) = 0;
+  virtual HRESULT WINAPI ReleaseMarshalData(IStream* pStm) = 0;
+  virtual HRESULT WINAPI DisconnectObject(DWORD dwReserved) = 0;
+};
+
