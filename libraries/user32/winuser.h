@@ -50,6 +50,21 @@ struct TRACKMOUSEEVENT {
   DWORD dwHoverTime;
 };
 
+struct WNDCLASSEXA {
+  UINT cbSize;
+  UINT style;
+  WNDPROC lpfnWndProc;
+  int cbClsExtra;
+  int cbWndExtra;
+  HINSTANCE hInstance;
+  HICON hIcon;
+  HCURSOR hCursor;
+  HBRUSH hbrBackground;
+  LPCSTR lpszMenuName;
+  LPCSTR lpszClassName;
+  HICON hIconSm;
+};
+
 typedef PAINTSTRUCT* PPAINTSTRUCT;
 typedef PAINTSTRUCT* NPPAINTSTRUCT;
 typedef PAINTSTRUCT* LPPAINTSTRUCT;
@@ -63,3 +78,8 @@ typedef WNDCLASSW* NPWNDCLASSW;
 typedef WNDCLASSW* LPWNDCLASSW;
 
 typedef TRACKMOUSEEVENT* LPTRACKMOUSEEVENT;
+
+typedef WNDCLASSEXA* PWNDCLASSEXA;
+typedef WNDCLASSEXA* NPWNDCLASSEXA;
+typedef WNDCLASSEXA* LPWNDCLASSEXA;
+
