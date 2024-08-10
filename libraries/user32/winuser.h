@@ -65,6 +65,21 @@ struct WNDCLASSEXA {
   HICON hIconSm;
 };
 
+struct WNDCLASSEXW {
+  UINT cbSize;
+  UINT style;
+  WNDPROC lpfnWndProc;
+  int cbClsExtra;
+  int cbWndExtra;
+  HINSTANCE hInstance;
+  HICON hIcon;
+  HCURSOR hCursor;
+  HBRUSH hbrBackground;
+  LPCWSTR lpszMenuName;
+  LPCWSTR lpszClassName;
+  HICON hIconSm;
+};
+
 typedef PAINTSTRUCT* PPAINTSTRUCT;
 typedef PAINTSTRUCT* NPPAINTSTRUCT;
 typedef PAINTSTRUCT* LPPAINTSTRUCT;
@@ -82,4 +97,8 @@ typedef TRACKMOUSEEVENT* LPTRACKMOUSEEVENT;
 typedef WNDCLASSEXA* PWNDCLASSEXA;
 typedef WNDCLASSEXA* NPWNDCLASSEXA;
 typedef WNDCLASSEXA* LPWNDCLASSEXA;
+
+typedef WNDCLASSEXW* PWNDCLASSEXW;
+typedef WNDCLASSEXW* NPWNDCLASSEXW;
+typedef WNDCLASSEXW* LPWNDCLASSEXW;
 
