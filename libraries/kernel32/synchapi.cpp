@@ -111,3 +111,7 @@ void WINAPI AcquireSRWLockExclusive(PSRWLOCK SRWLock) {
   pthread_rwlock_wrlock((pthread_rwlock_t*)SRWLock->Ptr);
 }
 
+void WINAPI ReleaseSRWLockExclusive(PSRWLOCK SRWLock) {
+  pthread_rwlock_unlock((pthread_rwlock_t*)SRWLock->Ptr);
+}
+
