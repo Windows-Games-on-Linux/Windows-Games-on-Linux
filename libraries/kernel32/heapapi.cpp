@@ -14,6 +14,7 @@ HANDLE WINAPI GetProcessHeap() {
 LPVOID WINAPI HeapAlloc(HANDLE hHeap, DWORD dwFlags, SIZE_T dwBytes) {
   //For now only the default heap is supported
   if (hHeap != (HANDLE)1) {
+    std::cout << "HeapAlloc: Heaps other than the default one are not supported" << std::endl;
     return nullptr;
   }
 
