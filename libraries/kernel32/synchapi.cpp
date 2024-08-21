@@ -86,3 +86,10 @@ BOOL WINAPI InitializeCriticalSectionEx(LPCRITICAL_SECTION lpCriticalSection, DW
   return 1;
 }
 
+void WINAPI InitializeSRWLock(PSRWLOCK SRWLock) {
+  pthread_rwlock_t* rwlock = new pthread_rwlock_t();
+  pthread_rwlock_init(rwlock, nullptr);
+
+  SRWLock->Ptr = rwlock;
+}
+
