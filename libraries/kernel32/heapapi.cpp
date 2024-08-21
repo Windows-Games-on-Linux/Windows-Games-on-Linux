@@ -63,7 +63,6 @@ SIZE_T WINAPI HeapSize(HANDLE hHeap, DWORD dwFlags, LPCVOID lpMem) {
     std::cout << "HeapSize: Unimplemented Flag: HEAP_NO_SERIALIZE" << std::endl;
   }
 
-  std::cout << "HeapSize: " << malloc_usable_size((void*)lpMem) << std::endl;
   return malloc_usable_size((void*)lpMem);
 }
 
