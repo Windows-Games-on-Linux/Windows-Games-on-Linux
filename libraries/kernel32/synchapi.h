@@ -33,5 +33,6 @@ extern "C" {
   BOOL WINAPI InitializeCriticalSectionEx(LPCRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount, DWORD Flags);
   void WINAPI InitializeSRWLock(PSRWLOCK SRWLock);
   BOOL WINAPI SetEvent(HANDLE hEvent);
+  BOOL WINAPI ResetEvent(HANDLE hEvent);
 };
 
