@@ -100,3 +100,10 @@ BOOL WINAPI SetEvent(HANDLE hEvent) {
   return 1;
 }
 
+BOOL WINAPI ResetEvent(HANDLE hEvent) {
+  Event* event = (Event*)hEvent;
+  event->signaled = false;
+
+  return 1;
+}
+
