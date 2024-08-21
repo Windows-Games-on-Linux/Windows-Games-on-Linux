@@ -93,3 +93,10 @@ void WINAPI InitializeSRWLock(PSRWLOCK SRWLock) {
   SRWLock->Ptr = rwlock;
 }
 
+BOOL WINAPI SetEvent(HANDLE hEvent) {
+  Event* event = (Event*)hEvent;
+  event->signaled = true;
+
+  return 1;
+}
+
