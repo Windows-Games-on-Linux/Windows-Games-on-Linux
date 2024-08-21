@@ -34,5 +34,6 @@ extern "C" {
   void WINAPI InitializeSRWLock(PSRWLOCK SRWLock);
   BOOL WINAPI SetEvent(HANDLE hEvent);
   BOOL WINAPI ResetEvent(HANDLE hEvent);
+  void WINAPI AcquireSRWLockExclusive(PSRWLOCK SRWLock);
 };
 

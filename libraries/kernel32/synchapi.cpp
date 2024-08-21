@@ -107,3 +107,7 @@ BOOL WINAPI ResetEvent(HANDLE hEvent) {
   return 1;
 }
 
+void WINAPI AcquireSRWLockExclusive(PSRWLOCK SRWLock) {
+  pthread_rwlock_wrlock((pthread_rwlock_t*)SRWLock->Ptr);
+}
+
