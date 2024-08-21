@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <malloc.h>
 
 HANDLE WINAPI GetProcessHeap() {
   //Unlike Windows, Linux only has one global heap and doesn't support multiple heaps natively
@@ -49,5 +50,19 @@ BOOL WINAPI HeapFree(HANDLE hHeap, DWORD dwFlags, LPVOID lpMem) {
 
   free(lpMem);
   return 1;
+}
+
+SIZE_T WINAPI HeapSize(HANDLE hHeap, DWORD dwFlags, LPCVOID lpMem) {
+  if (hHeap != (HANDLE)1) {
+    std::cout << "HeapSize: Heaps other than the default one are not supported" << std::endl;
+    return 0;
+  }
+
+  if (dwFlags & HEAP_NO_SERIALIZE) {
+    std::cout << "HeapSize: Unimplemented Flag: HEAP_NO_SERIALIZE" << std::endl;
+  }
+
+  std::cout << "HeapSize: " << malloc_usable_size((void*)lpMem) << std::endl;
+  return malloc_usable_size((void*)lpMem);
 }
 
