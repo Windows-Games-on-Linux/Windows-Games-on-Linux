@@ -212,3 +212,15 @@ HMODULE WINAPI GetModuleHandleW(LPCWSTR lpModuleName) {
   return dlopen(libraryPath.c_str(), RTLD_LAZY | RTLD_NOLOAD);
 }
 
+HMODULE WINAPI GetModuleHandleA(LPCSTR lpModuleName) {
+  if (lpModuleName == nullptr) {
+    //Linux doesn't support executable handles
+    //Let's just assume the value 5 to be our executable's handle
+    return (HMODULE)5;
+  }
+
+  //Otherwise, get a handle to an already loaded shared library
+  std::string libraryPath = getLibraryPath(lpModuleName);
+  return dlopen(libraryPath.c_str(), RTLD_LAZY | RTLD_NOLOAD);
+}
+
