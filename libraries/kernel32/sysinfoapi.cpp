@@ -22,3 +22,20 @@ void WINAPI GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime) {
   lpSystemTimeAsFileTime->dwLowDateTime = (filetime & 0x00000000FFFFFFFFULL);
   lpSystemTimeAsFileTime->dwHighDateTime = ((filetime & 0xFFFFFFFF00000000ULL) >> 32);
 }
+
+void WINAPI GetSystemTime(LPSYSTEMTIME lpSystemTime) {
+  time_t t = time(nullptr);
+  struct tm* tm_info = localtime(&t);
+
+  lpSystemTime->wYear = tm_info->tm_year + 1900;
+  lpSystemTime->wMonth = tm_info->tm_mon + 1;
+  lpSystemTime->wDayOfWeek = tm_info->tm_wday;
+  lpSystemTime->wDay = tm_info->tm_mday;
+  lpSystemTime->wHour = tm_info->tm_hour;
+  lpSystemTime->wMinute = tm_info->tm_min;
+  lpSystemTime->wSecond = tm_info->tm_sec;
+  lpSystemTime->wMilliseconds = 0;
+
+  //TODO: Add support for leap seconds
+}
+
