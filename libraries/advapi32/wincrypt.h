@@ -53,7 +53,30 @@
 #define CALG_TLS1_MASTER          0x00004C06
 #define CALG_TLS1PRF              0x0000800A
 
+#define PROV_RSA_FULL     0x00000001
+#define PROV_RSA_AES      0x00000018
+#define PROV_RSA_SIG      0x00000002
+#define PROV_RSA_SCHANNEL 0x0000000C
+#define PROV_DSS          0x00000003
+#define PROV_DSS_DH       0x0000000D
+#define PROV_DH_SCHANNEL  0x00000012
+#define PROV_FORTEZZA     0x00000004
+#define PROV_MS_EXCHANGE  0x00000005
+#define PROV_SSL          0x00000006
+
+#define CRYPT_VERIFYCONTEXT              0xF0000000
+#define CRYPT_NEWKEYSET                  0x00000008
+#define CRYPT_MACHINE_KEYSET             0x00000020
+#define CRYPT_DELETEKEYSET               0x00000010
+#define CRYPT_SILENT                     0x00000040
+#define CRYPT_DEFAULT_CONTAINER_OPTIONAL 0x00000080
+
 typedef ULONG_PTR    HCRYPTHASH;
 typedef ULONG_PTR    HCRYPTKEY;
 typedef ULONG_PTR    HCRYPTPROV;
 typedef unsigned int ALG_ID;
+
+extern "C" {
+  BOOL WINAPI CryptAcquireContextW(HCRYPTPROV* phProv, LPCWSTR szContainer, LPCWSTR szProvider, DWORD dwProvType, DWORD dwFlags);
+};
+
