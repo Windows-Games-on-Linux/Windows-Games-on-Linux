@@ -66,3 +66,28 @@ SIZE_T WINAPI HeapSize(HANDLE hHeap, DWORD dwFlags, LPCVOID lpMem) {
   return malloc_usable_size((void*)lpMem);
 }
 
+LPVOID WINAPI HeapReAlloc(HANDLE hHeap, DWORD dwFlags, LPVOID lpMem, SIZE_T dwBytes) {
+  if (hHeap != (HANDLE)1) {
+    std::cout << "HeapReAlloc: Heaps other than the default one are not supported" << std::endl;
+    return 0;
+  }
+
+  if (dwFlags & HEAP_GENERATE_EXCEPTIONS) {
+    std::cout << "HeapReAlloc: Unimplemented flag: HEAP_GENERATE_EXCEPTIONS" << std::endl;
+  }
+
+  if (dwFlags & HEAP_NO_SERIALIZE) {
+    std::cout << "HeapReAlloc: Unimplemented flag: HEAP_NO_SERIALIZE" << std::endl;
+  }
+
+  if (dwFlags & HEAP_REALLOC_IN_PLACE_ONLY) {
+    std::cout << "HeapReAlloc: Unimplemented flag: HEAP_REALLOC_IN_PLACE_ONLY" << std::endl;
+  }
+
+  if (dwFlags & HEAP_ZERO_MEMORY) {
+    std::cout << "HeapReAlloc: Unimplemented flag: HEAP_ZERO_MEMORY" << std::endl;
+  }
+
+  return realloc(lpMem, dwBytes);
+}
+
