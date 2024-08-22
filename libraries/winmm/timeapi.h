@@ -9,5 +9,6 @@
 extern "C" {
   MMRESULT WINAPI timeGetDevCaps(LPTIMECAPS ptc, UINT cbtc);
   DWORD WINAPI timeGetTime();
+  MMRESULT WINAPI timeBeginPeriod(UINT uPeriod);
 };
 

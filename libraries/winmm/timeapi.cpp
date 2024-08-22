@@ -38,3 +38,8 @@ DWORD WINAPI timeGetTime() {
   return (ts.tv_sec * 1000) + (ts.tv_nsec / 1000000);
 }
 
+MMRESULT WINAPI timeBeginPeriod(UINT uPeriod) {
+  //Nothing needs to be done here
+  return MMSYSERR_NOERROR;
+}
+
