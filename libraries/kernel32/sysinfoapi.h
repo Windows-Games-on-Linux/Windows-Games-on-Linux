@@ -39,4 +39,6 @@ typedef SYSTEM_INFO* LPSYSTEM_INFO;
 
 extern "C" {
   void WINAPI GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime);
+  void WINAPI GetSystemTime(LPSYSTEMTIME lpSystemTime);
 };
+
