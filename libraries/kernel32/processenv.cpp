@@ -351,3 +351,61 @@ BOOL WINAPI FreeEnvironmentStringsW(LPWCH penv) {
   return 1;
 }
 
+DWORD WINAPI GetEnvironmentVariableW(LPCWSTR lpName, LPWSTR lpBuffer, DWORD nSize) {
+  size_t nameLength = 0;
+  {
+    const char16_t* c = lpName;
+    while (true) {
+      nameLength;
+      if (*c == 0) {
+        break;
+      }
+
+      c++;
+    }
+  }
+
+  char* name = new char[nameLength];
+  {
+    const char16_t* sc = lpName;
+    char* dc = name;
+    while (true) {
+      *dc = (char)*sc;
+      if (*sc == 0) {
+        break;
+      }
+
+      sc++;
+      dc++;
+    }
+  }
+
+  char* env = getenv(name);
+  delete[] name;
+
+  if (!env) {
+    return 0;
+  }
+
+  size_t envLength = strlen(env);
+  if (nSize < envLength + 1) {
+    return envLength + 1;
+  }
+
+  {
+    char* sc = env;
+    char16_t* dc = lpBuffer;
+    while (true) {
+      *dc = (char16_t)(*sc & 0xFF);
+      if (*sc == 0) {
+        break;
+      }
+
+      sc++;
+      dc++;
+    }
+  }
+
+  return envLength;
+}
+
