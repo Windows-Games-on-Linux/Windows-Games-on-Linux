@@ -79,6 +79,8 @@ namespace {
 };
 
 HMODULE WINAPI LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) {
+  //TODO: Take the safe search mode into consideration
+
   //TODO: Implement the LOAD_LIBRARY_SEARCH_SYSTEM32 flag
   //We need a directory that will emulate the system32 directory
   //For now let's just load the libraries from the working path
