@@ -12,5 +12,6 @@ extern "C" {
   LPWSTR WINAPI GetCommandLineW();
   LPWCH WINAPI GetEnvironmentStringsW();
   BOOL WINAPI FreeEnvironmentStringsW(LPWCH penv);
+  DWORD WINAPI GetEnvironmentVariableW(LPCWSTR lpName, LPWSTR lpBuffer, DWORD nSize);
 };
 
