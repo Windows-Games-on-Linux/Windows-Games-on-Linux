@@ -120,3 +120,20 @@ HANDLE WINAPI OpenEventW(DWORD dwDesiredAccess, BOOL bInheritHandle, LPCWSTR lpN
   return nullptr;
 }
 
+BOOL WINAPI InitOnceBeginInitialize(LPINIT_ONCE lpInitOnce, DWORD dwFlags, PBOOL fPending, LPVOID* lpContext) {
+  pthread_once_t* once = new pthread_once_t();
+  *once = PTHREAD_ONCE_INIT;
+
+  lpInitOnce->Ptr = once;
+
+  if (dwFlags & INIT_ONCE_ASYNC) {
+    std::cout << "InitOnceBeginInitialize: Unimplemented flag: INIT_ONCE_ASYNC" << std::endl;
+  }
+
+  if (dwFlags & INIT_ONCE_CHECK_ONLY) {
+    std::cout << "InitOnceBeginInitialize: Unimplemented flag: INIT_ONCE_CHECK_ONLY" << std::endl;
+  }
+
+  return 1;
+}
+
