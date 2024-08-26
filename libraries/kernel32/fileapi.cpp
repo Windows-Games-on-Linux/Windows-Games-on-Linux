@@ -2,6 +2,7 @@
 
 #include <sys/stat.h>
 #include <cstdio>
+#include <sys/stat.h>
 
 DWORD WINAPI GetFileType(HANDLE hFile) {
   int fd = -1;
@@ -49,5 +50,55 @@ DWORD WINAPI GetFileType(HANDLE hFile) {
 
 BOOL WINAPI AreFileApisANSI() {
   return 0;
+}
+
+DWORD WINAPI GetFileAttributesW(LPCWSTR lpFileName) {
+  size_t length = 0;
+  for (const char16_t* c = lpFileName; *c != 0; c++) {
+    length++;
+  }
+
+  char* fileName = new char[length + 1];
+  char* namePart = fileName;
+
+  for (int i = 0; i < length; i++) {
+    fileName[i] = (char)lpFileName[i];
+
+    if (fileName[i] == '\\') {
+      fileName[i] = '/';
+    }
+
+    if (fileName[i] == '/') {
+      namePart = &fileName[i + 1];
+    }
+  }
+
+  struct stat file_stat = {};
+  if (stat(fileName, &file_stat) != 0) {
+    delete[] fileName;
+    return INVALID_FILE_ATTRIBUTES;
+  }
+
+  delete[] fileName;
+
+  DWORD attributes = 0;
+
+  //Let's assume that the file is read-only when write permissions are not enabled for anyone
+  if ((file_stat.st_mode & S_IWUSR) == 0 && (file_stat.st_mode & S_IWGRP) == 0 && (file_stat.st_mode & S_IWOTH) == 0) {
+    attributes |= FILE_ATTRIBUTE_READONLY;
+  }
+
+  //In Linux, the file is considered "hidden" when its name begins with a dot
+  if (namePart[0] == '.') {
+    attributes |= FILE_ATTRIBUTE_HIDDEN;
+  }
+
+  if (S_ISDIR(file_stat.st_mode)) {
+    attributes |= FILE_ATTRIBUTE_DIRECTORY;
+  }
+
+  //TODO: More attributes
+
+  return attributes;
 }
 
