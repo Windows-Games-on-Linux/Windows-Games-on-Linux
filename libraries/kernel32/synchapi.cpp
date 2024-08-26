@@ -115,3 +115,8 @@ void WINAPI ReleaseSRWLockExclusive(PSRWLOCK SRWLock) {
   pthread_rwlock_unlock((pthread_rwlock_t*)SRWLock->Ptr);
 }
 
+HANDLE WINAPI OpenEventW(DWORD dwDesiredAccess, BOOL bInheritHandle, LPCWSTR lpName) {
+  std::cout << "OpenEventW: Support for named events is not implemented" << std::endl;
+  return nullptr;
+}
+
