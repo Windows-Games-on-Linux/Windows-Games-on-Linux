@@ -263,6 +263,40 @@ struct UNWIND_HISTORY_TABLE {
   UNWIND_HISTORY_TABLE_ENTRY Entry[];
 };
 
+struct IMAGE_RESOURCE_DIRECTORY {
+  DWORD Characteristics;
+  DWORD TimeDateStamp;
+  WORD MajorVersion;
+  WORD MinorVersion;
+  WORD NumberOfNamedEntries;
+  WORD NumberOfIdEntries;
+};
+
+struct IMAGE_RESOURCE_DIRECTORY_ENTRY {
+  union {
+    struct {
+      DWORD NameOffset : 31;
+      DWORD NameIsString : 1;
+    } DUMMYSTRUCTNAME;
+    DWORD Name;
+    WORD Id;
+  } DUMMYUNIONNAME;
+  union {
+    DWORD OffsetToData;
+    struct {
+      DWORD OffsetToDirectory : 31;
+      DWORD DataIsDirectory : 1;
+    } DUMMYSTRUCTNAME;
+  } DUMMYUNIONNAME2;
+};
+
+struct IMAGE_RESOURCE_DATA_ENTRY {
+  DWORD OffsetToData;
+  DWORD Size;
+  DWORD CodePage;
+  DWORD Reserved;
+};
+
 typedef SID_IDENTIFIER_AUTHORITY* PSID_IDENTIFIER_AUTHORITY;
 typedef SID* PSID;
 
@@ -281,6 +315,12 @@ typedef OSVERSIONINFOW* LPOSVERSIONINFOW;
 
 typedef UNWIND_HISTORY_TABLE_ENTRY* PUNWIND_HISTORY_TABLE_ENTRY;
 typedef UNWIND_HISTORY_TABLE*       PUNWIND_HISTORY_TABLE;
+
+typedef IMAGE_RESOURCE_DIRECTORY* PIMAGE_RESOURCE_DIRECTORY;
+
+typedef IMAGE_RESOURCE_DIRECTORY_ENTRY* PIMAGE_RESOURCE_DIRECTORY_ENTRY;
+
+typedef IMAGE_RESOURCE_DATA_ENTRY* PIMAGE_RESOURCE_DATA_ENTRY;
 
 enum TOKEN_INFORMATION_CLASS {
   TokenUser = 1,
