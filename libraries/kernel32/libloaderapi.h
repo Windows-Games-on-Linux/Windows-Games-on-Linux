@@ -34,5 +34,6 @@ extern "C" {
   HMODULE WINAPI GetModuleHandleW(LPCWSTR lpModuleName);
   HMODULE WINAPI GetModuleHandleA(LPCSTR lpModuleName);
   HRSRC WINAPI FindResourceExW(HMODULE hModule, LPCWSTR lpType, LPCWSTR lpName, WORD wLanguage);
+  HGLOBAL WINAPI LoadResource(HMODULE hModule, HRSRC hResInfo);
 };
 

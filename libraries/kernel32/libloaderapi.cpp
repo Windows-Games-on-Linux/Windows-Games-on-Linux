@@ -332,3 +332,40 @@ HRSRC WINAPI FindResourceExW(HMODULE hModule, LPCWSTR lpType, LPCWSTR lpName, WO
   return nullptr;
 }
 
+HGLOBAL WINAPI LoadResource(HMODULE hModule, HRSRC hResInfo) {
+  if (hModule != (HMODULE)5) {
+    std::cout << "LoadResource: Support for modules other than the current one is not implemented" << std::endl;
+    return nullptr;
+  }
+
+  //Currently for simplicity of implementation, the .rsrc section is located using a shared memory object
+  //identified by the process ID
+  std::string shm_path = "/windows-games-on-linux-";
+  shm_path += std::to_string(getpid());
+  shm_path += "-resources";
+
+  int shm_fd = shm_open(shm_path.c_str(), O_RDWR, 0600);
+  if (shm_fd == -1) {
+    return nullptr;
+  }
+
+  //This object contains two fields:
+  // - imageBase: The image base address; required to locate the actual data of a requested resource since it's pointed to by an RVA
+  // - rsrc: The address of the .rsrc section
+  size_t shm_size = 2 * sizeof(uintptr_t);
+  uintptr_t* shm_data = (uintptr_t*)mmap(nullptr, shm_size, PROT_READ, MAP_SHARED, shm_fd, 0);
+  if (!shm_data) {
+    close(shm_fd);
+    return nullptr;
+  }
+
+  uintptr_t imageBase = shm_data[0];
+  uintptr_t rsrc = shm_data[1];
+
+  munmap(shm_data, shm_size);
+  close(shm_fd);
+
+  PIMAGE_RESOURCE_DIRECTORY_ENTRY entry = (PIMAGE_RESOURCE_DIRECTORY_ENTRY)hResInfo;
+  return (HGLOBAL)(rsrc + entry->DUMMYUNIONNAME2.OffsetToData);
+}
+
