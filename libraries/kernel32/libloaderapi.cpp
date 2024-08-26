@@ -4,6 +4,10 @@
 #include <iostream>
 #include <dlfcn.h>
 #include "processenv.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
 
 #define DONT_RESOLVE_DLL_REFERENCES         0x00000001
 #define LOAD_IGNORE_CODE_AUTHZ_LEVEL        0x00000010
@@ -224,5 +228,107 @@ HMODULE WINAPI GetModuleHandleA(LPCSTR lpModuleName) {
   //Otherwise, get a handle to an already loaded shared library
   std::string libraryPath = getLibraryPath(lpModuleName);
   return dlopen(libraryPath.c_str(), RTLD_LAZY | RTLD_NOLOAD);
+}
+
+HRSRC WINAPI FindResourceExW(HMODULE hModule, LPCWSTR lpType, LPCWSTR lpName, WORD wLanguage) {
+  if (hModule != (HMODULE)5) {
+    std::cout << "FindResourceExW: Support for modules other than the current one is not implemented" << std::endl;
+    return nullptr;
+  }
+
+  if ((uintptr_t)lpType >= 0x10000) {
+    std::cout << "FindResourceExW: Support for named types is not implemented" << std::endl;
+    return nullptr;
+  }
+
+  if ((uintptr_t)lpName >= 0x10000) {
+    std::cout << "FindResourceExW: Support for named resources is not implemented" << std::endl;
+    return nullptr;
+  }
+
+  if ((uintptr_t)wLanguage >= 0x10000) {
+    std::cout << "FindResourceExW: Support for named languages is not implemented" << std::endl;
+    return nullptr;
+  }
+
+  //Currently for simplicity of implementation, the .rsrc section is located using a shared memory object
+  //identified by the process ID
+  std::string shm_path = "/windows-games-on-linux-";
+  shm_path += std::to_string(getpid());
+  shm_path += "-resources";
+
+  int shm_fd = shm_open(shm_path.c_str(), O_RDWR, 0600);
+  if (shm_fd == -1) {
+    return nullptr;
+  }
+
+  //This object contains two fields:
+  // - imageBase: The image base address; required to locate the actual data of a requested resource since it's pointed to by an RVA
+  // - rsrc: The address of the .rsrc section
+  size_t shm_size = 2 * sizeof(uintptr_t);
+  uintptr_t* shm_data = (uintptr_t*)mmap(nullptr, shm_size, PROT_READ, MAP_SHARED, shm_fd, 0);
+  if (!shm_data) {
+    close(shm_fd);
+    return nullptr;
+  }
+
+  uintptr_t imageBase = shm_data[0];
+  uintptr_t rsrc = shm_data[1];
+
+  munmap(shm_data, shm_size);
+  close(shm_fd);
+
+
+
+  //First, we need to scan the root directory for an lpType entry that will point to a directory of resources of the given type
+  PIMAGE_RESOURCE_DIRECTORY typeDirectory = (PIMAGE_RESOURCE_DIRECTORY)rsrc;
+
+  PIMAGE_RESOURCE_DIRECTORY_ENTRY typeIdEntries = (PIMAGE_RESOURCE_DIRECTORY_ENTRY)((uint8_t*)typeDirectory + sizeof(IMAGE_RESOURCE_DIRECTORY) + typeDirectory->NumberOfNamedEntries * sizeof(IMAGE_RESOURCE_DIRECTORY_ENTRY));
+
+  PIMAGE_RESOURCE_DIRECTORY resourceDirectory = nullptr;
+
+  for (int i = 0; i < typeDirectory->NumberOfIdEntries; i++) {
+    auto& entry = typeIdEntries[i];
+    if (entry.DUMMYUNIONNAME.Id == (WORD)((uintptr_t)lpType)) {
+      resourceDirectory = (PIMAGE_RESOURCE_DIRECTORY)(rsrc + (entry.DUMMYUNIONNAME2.OffsetToData & 0x7FFFFFFF));
+      break;
+    }
+  }
+
+  if (!resourceDirectory) {
+    return nullptr;
+  }
+
+
+
+  //Now, we can the found subdirectory for an lpName entry that will point to a directory of languages for the given resource
+  PIMAGE_RESOURCE_DIRECTORY_ENTRY resourceIdEntries = (PIMAGE_RESOURCE_DIRECTORY_ENTRY)((uint8_t*)resourceDirectory + sizeof(IMAGE_RESOURCE_DIRECTORY) + resourceDirectory->NumberOfNamedEntries * sizeof(IMAGE_RESOURCE_DIRECTORY_ENTRY));
+
+  PIMAGE_RESOURCE_DIRECTORY languageDirectory = nullptr;
+
+  for (int i = 0; i < resourceDirectory->NumberOfIdEntries; i++) {
+    auto& entry = resourceIdEntries[i];
+    if (entry.DUMMYUNIONNAME.Id == (WORD)((uintptr_t)lpName)) {
+      languageDirectory = (PIMAGE_RESOURCE_DIRECTORY)(rsrc + (entry.DUMMYUNIONNAME2.OffsetToData & 0x7FFFFFFF));
+      break;
+    }
+  }
+
+  if (!languageDirectory) {
+    return nullptr;
+  }
+
+
+
+  //And now, finally we scan the found resource's language subdirectory to find the actual resource requested
+  PIMAGE_RESOURCE_DIRECTORY_ENTRY languageIdEntries = (PIMAGE_RESOURCE_DIRECTORY_ENTRY)((uint8_t*)languageDirectory + sizeof(IMAGE_RESOURCE_DIRECTORY) + languageDirectory->NumberOfNamedEntries * sizeof(IMAGE_RESOURCE_DIRECTORY_ENTRY));
+
+  for (int i = 0; i < languageDirectory->NumberOfIdEntries; i++) {
+    if (languageIdEntries[i].DUMMYUNIONNAME.Id == (WORD)((uintptr_t)wLanguage)) {
+      return &languageIdEntries[i];
+    }
+  }
+
+  return nullptr;
 }
 
