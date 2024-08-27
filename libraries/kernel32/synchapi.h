@@ -6,6 +6,8 @@
 #define INIT_ONCE_ASYNC      0x00000002
 #define INIT_ONCE_CHECK_ONLY 0x00000001
 
+#define CREATE_MUTEX_INITIAL_OWNER 0x00000001
+
 typedef RTL_RUN_ONCE           INIT_ONCE;
 typedef RTL_CONDITION_VARIABLE CONDITION_VARIABLE;
 typedef RTL_SRWLOCK            SRWLOCK;
@@ -41,5 +43,6 @@ extern "C" {
   void WINAPI ReleaseSRWLockExclusive(PSRWLOCK SRWLock);
   HANDLE WINAPI OpenEventW(DWORD dwDesiredAccess, BOOL bInheritHandle, LPCWSTR lpName);
   BOOL WINAPI InitOnceBeginInitialize(LPINIT_ONCE lpInitOnce, DWORD dwFlags, PBOOL fPending, LPVOID* lpContext);
+  HANDLE WINAPI CreateMutexExW(LPSECURITY_ATTRIBUTES lpMutexAttributes, LPCWSTR lpName, DWORD dwFlags, DWORD dwDesiredAccess);
 };
 

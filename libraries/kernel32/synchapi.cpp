@@ -2,6 +2,10 @@
 
 #include <pthread.h>
 #include <iostream>
+#include <cstring>
+#include <sys/mman.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 void WINAPI EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
   //TODO: Implement the EXCEPTION_POSSIBLE_DEADLOCK exception
@@ -135,5 +139,72 @@ BOOL WINAPI InitOnceBeginInitialize(LPINIT_ONCE lpInitOnce, DWORD dwFlags, PBOOL
   }
 
   return 1;
+}
+
+HANDLE WINAPI CreateMutexExW(LPSECURITY_ATTRIBUTES lpMutexAttributes, LPCWSTR lpName, DWORD dwFlags, DWORD dwDesiredAccess) {
+  pthread_mutex_t* mutex = nullptr;
+
+  if (lpName != nullptr) {
+    size_t nameLength = 0;
+    for (const char16_t* c = lpName; *c != 0; c++) {
+      nameLength++;
+    }
+
+    char* name = new char[nameLength + 1];
+    for (int i = 0; i < nameLength + 1; i++) {
+      name[i] = (char)lpName[i];
+      if (name[i] == 0) {
+        break;
+      }
+    }
+
+    std::string shm_path;
+
+    if (memcmp(name, "Global\\", 7) == 0) {
+      shm_path = "/mutex-global-";
+      shm_path += &name[7];
+    } else if (memcmp(name, "Local\\", 6) == 0) {
+      shm_path = "/mutex-local-";
+      shm_path += &name[6];
+    } else {
+      shm_path = name;
+    }
+
+    int shm_fd = shm_open(shm_path.c_str(), O_RDWR | O_CREAT | O_EXCL, 0666); //TODO: Proper mode?
+    delete[] name;
+
+    if (shm_fd == -1) {
+      return nullptr;
+    }
+
+    int shm_size = sizeof(pthread_mutex_t);
+    if (ftruncate(shm_fd, shm_size) == -1) {
+      close(shm_fd);
+      return nullptr;
+    }
+
+    mutex = (pthread_mutex_t*)mmap(nullptr, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
+    if (!mutex) {
+      close(shm_fd);
+      return nullptr;
+    }
+  } else {
+    mutex = new pthread_mutex_t();
+  }
+
+  if (dwFlags & CREATE_MUTEX_INITIAL_OWNER) {
+    std::cout << "CreateMutexExW: Unimplemented flag: CREATE_MUTEX_INITIAL_OWNER" << std::endl;
+  }
+
+  pthread_mutexattr_t mutexattr;
+  pthread_mutexattr_init(&mutexattr);
+
+  pthread_mutexattr_settype(&mutexattr, PTHREAD_MUTEX_RECURSIVE);
+  pthread_mutexattr_setpshared(&mutexattr, PTHREAD_PROCESS_SHARED);
+
+  pthread_mutex_init(mutex, &mutexattr);
+
+  pthread_mutexattr_destroy(&mutexattr);
+  return mutex;
 }
 
