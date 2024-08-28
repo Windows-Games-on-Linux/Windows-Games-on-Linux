@@ -238,7 +238,6 @@ DWORD WINAPI WaitForSingleObjectEx(HANDLE hHandle, DWORD dwMilliseconds, BOOL bA
     pthread_mutex_t* mutex = mutexInfo->mutex;
 
     pthread_mutex_lock(mutex);
-    pthread_mutex_unlock(mutex);
 
     return WAIT_OBJECT_0;
   } else {
