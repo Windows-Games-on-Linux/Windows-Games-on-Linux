@@ -7,25 +7,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <semaphore.h>
-
-namespace {
-  enum ObjectType {
-    Mutex
-  };
-
-  struct ObjectInfo {
-    ObjectType objectType;
-  };
-
-  struct MutexInfo : public ObjectInfo {
-    pthread_mutex_t* mutex;
-
-    MutexInfo(pthread_mutex_t* mutex) {
-      this->objectType = ObjectType::Mutex;
-      this->mutex = mutex;
-    }
-  };
-};
+#include "objects.h"
 
 void WINAPI EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
   //TODO: Implement the EXCEPTION_POSSIBLE_DEADLOCK exception
@@ -164,13 +146,17 @@ BOOL WINAPI InitOnceBeginInitialize(LPINIT_ONCE lpInitOnce, DWORD dwFlags, PBOOL
 HANDLE WINAPI CreateMutexExW(LPSECURITY_ATTRIBUTES lpMutexAttributes, LPCWSTR lpName, DWORD dwFlags, DWORD dwDesiredAccess) {
   pthread_mutex_t* mutex = nullptr;
 
+  char* name = nullptr;
+  int shm_fd = 0;
+  int shm_size = 0;
+
   if (lpName != nullptr) {
     size_t nameLength = 0;
     for (const char16_t* c = lpName; *c != 0; c++) {
       nameLength++;
     }
 
-    char* name = new char[nameLength + 1];
+    name = new char[nameLength + 1];
     for (int i = 0; i < nameLength + 1; i++) {
       name[i] = (char)lpName[i];
       if (name[i] == 0) {
@@ -190,22 +176,26 @@ HANDLE WINAPI CreateMutexExW(LPSECURITY_ATTRIBUTES lpMutexAttributes, LPCWSTR lp
       shm_path = name;
     }
 
-    int shm_fd = shm_open(shm_path.c_str(), O_RDWR | O_CREAT | O_EXCL, 0666); //TODO: Proper mode?
-    delete[] name;
+    shm_fd = shm_open(shm_path.c_str(), O_RDWR | O_CREAT | O_EXCL, 0666); //TODO: Proper mode?
 
     if (shm_fd == -1) {
+      delete[] name;
       return nullptr;
     }
 
-    int shm_size = sizeof(pthread_mutex_t);
+    shm_size = sizeof(pthread_mutex_t);
     if (ftruncate(shm_fd, shm_size) == -1) {
       close(shm_fd);
+      delete[] name;
+
       return nullptr;
     }
 
     mutex = (pthread_mutex_t*)mmap(nullptr, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
     if (!mutex) {
       close(shm_fd);
+      delete[] name;
+
       return nullptr;
     }
   } else {
@@ -226,7 +216,7 @@ HANDLE WINAPI CreateMutexExW(LPSECURITY_ATTRIBUTES lpMutexAttributes, LPCWSTR lp
 
   pthread_mutexattr_destroy(&mutexattr);
 
-  MutexInfo* mutexInfo = new MutexInfo(mutex);
+  MutexInfo* mutexInfo = new MutexInfo(name, shm_fd, shm_size, mutex);
   return mutexInfo;
 }
 
