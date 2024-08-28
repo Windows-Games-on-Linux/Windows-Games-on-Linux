@@ -282,3 +282,12 @@ HANDLE WINAPI OpenSemaphoreW(DWORD dwDesiredAccess, BOOL bInheritHandle, LPCWSTR
   return sem;
 }
 
+BOOL WINAPI ReleaseMutex(HANDLE hMutex) {
+  MutexInfo* mutexInfo = (MutexInfo*)hMutex;
+
+  if (pthread_mutex_unlock(mutexInfo->mutex) != 0) {
+    return 0;
+  }
+
+  return 1;
+}
