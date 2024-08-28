@@ -7,6 +7,25 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+namespace {
+  enum ObjectType {
+    Mutex
+  };
+
+  struct ObjectInfo {
+    ObjectType objectType;
+  };
+
+  struct MutexInfo : public ObjectInfo {
+    pthread_mutex_t* mutex;
+
+    MutexInfo(pthread_mutex_t* mutex) {
+      this->objectType = ObjectType::Mutex;
+      this->mutex = mutex;
+    }
+  };
+};
+
 void WINAPI EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
   //TODO: Implement the EXCEPTION_POSSIBLE_DEADLOCK exception
   //This exception requires a timeout specified in the following registry value:
@@ -205,6 +224,27 @@ HANDLE WINAPI CreateMutexExW(LPSECURITY_ATTRIBUTES lpMutexAttributes, LPCWSTR lp
   pthread_mutex_init(mutex, &mutexattr);
 
   pthread_mutexattr_destroy(&mutexattr);
-  return mutex;
+
+  MutexInfo* mutexInfo = new MutexInfo(mutex);
+  return mutexInfo;
+}
+
+DWORD WINAPI WaitForSingleObjectEx(HANDLE hHandle, DWORD dwMilliseconds, BOOL bAlertable) {
+  ObjectInfo* objectInfo = (ObjectInfo*)hHandle;
+
+  if (objectInfo->objectType == ObjectType::Mutex) {
+    MutexInfo* mutexInfo = (MutexInfo*)objectInfo;
+    pthread_mutex_t* mutex = mutexInfo->mutex;
+
+    pthread_mutex_lock(mutex);
+    pthread_mutex_unlock(mutex);
+
+    return WAIT_OBJECT_0;
+  } else {
+    std::cout << "WaitForSingleObjectEx: Waiting for objects other than mutexes is not implemented" << std::endl;
+    return WAIT_FAILED;
+  }
+
+  return 0;
 }
 
