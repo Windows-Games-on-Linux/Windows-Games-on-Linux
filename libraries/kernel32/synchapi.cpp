@@ -6,6 +6,7 @@
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <semaphore.h>
 
 namespace {
   enum ObjectType {
@@ -246,5 +247,38 @@ DWORD WINAPI WaitForSingleObjectEx(HANDLE hHandle, DWORD dwMilliseconds, BOOL bA
   }
 
   return 0;
+}
+
+HANDLE WINAPI OpenSemaphoreW(DWORD dwDesiredAccess, BOOL bInheritHandle, LPCWSTR lpName) {
+  size_t nameLength = 0;
+  for (const char16_t* c = lpName; *c != 0; c++) {
+    nameLength++;
+  }
+
+  char* name = new char[nameLength + 1];
+  for (int i = 0; i < nameLength + 1; i++) {
+    name[i] = (char)lpName[i];
+  }
+
+  std::string sem_path;
+
+  if (memcmp(name, "Global\\", 7) == 0) {
+    sem_path = "/semaphore-global-";
+    sem_path += &name[7];
+  } else if (memcmp(name, "Local\\", 6) == 0) {
+    sem_path = "/semaphore-local-";
+    sem_path += &name[6];
+  } else {
+    sem_path = name;
+  }
+
+  delete[] name;
+
+  sem_t* sem = sem_open(sem_path.c_str(), 0);
+  if (sem == SEM_FAILED) {
+    return nullptr;
+  }
+
+  return sem;
 }
 
